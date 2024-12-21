@@ -22,15 +22,15 @@ global.prems = []
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
 
-global.packname = `⏤͟͟͞͞⋆⬪࣪ꥈ🎅★ ׄ ꒱ 𝑪𝒓𝒐𝒘𝑩𝒐𝒕 - 𝑺.𝑪.𝑨 ୭`
-global.author = '❄️𝐁𝐲 𝐖𝐢𝐥𝐥𝐙𝐞𝐤🎅'
-global.stickpack = '© CrowBot'
-global.stickauth = 'By WillZek'
+global.packname = `⏤͟͟͞͞⋆⬪࣪ꥈ🎅★ ׄ ꒱ 𝑩𝑰𝑻 - 𝑩𝑶𝑻  ୭`
+global.author = '❄️𝐁𝐲 𝕬𝖉𝖒𝖎𝖓🎅'
+global.stickpack = '© 𝑩𝑰𝑻 - 𝑩𝑶𝑻'
+global.stickauth = '𝑩𝒀 𝕬𝖉𝖒𝖎𝖓'
 global.wait = '🚩 *Aɢᴜᴀʀᴅᴇ ᴜɴ ᴍᴏᴍᴇɴᴛᴏ, sᴏʏ ʟᴇɴᴛ𝙾... ฅ^•ﻌ•^ฅ*'
 global.botname = '❄️FELIZ NAVIDAD❄️'
-global.textbot = `🌲𝐂𝐫𝐨𝐰𝐁𝐨𝐭 𝐁𝐲 𝐖𝐢𝐥𝐥𝐙𝐞𝐤⛄`
+global.textbot = `🌲𝑩𝑰𝑻 - 𝑩𝑶𝑻 𝐁𝐘 𝕬𝖉𝖒𝖎𝖓⛄`
 global.listo = '*Aqui tiene ฅ^•ﻌ•^ฅ*'
-global.namechannel = '𝐓𝐇𝐄 𝐂𝐑𝐎𝐖𝐁𝐎𝐓-𝐀𝐈 🌠'
+global.namechannel = '𝐓𝐇𝐄 𝑩𝑰𝑻 - 𝑩𝑶𝑻 🌠'
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
 
