@@ -1,4 +1,4 @@
-// Créditos A Niño Piña
+// Créditos A 𝕬𝖉𝖒𝖎𝖓
 let handler = async (m, { conn }) => {
 // No Quites Los Créditos🦌
 m.react('🎄');
