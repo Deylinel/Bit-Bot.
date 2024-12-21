@@ -51,7 +51,6 @@ var handler = async (m, { conn }) => {
 
 「 💰 *RECURSOS* 」
 💴 *Estrellas:* ${poin || 0}
-🌟 *Nivel:* ${level || 0}
 ✨ *Experiencia:* ${exp || 0}
 ⚜️ *Rango:* ${role}
 👑 *Premium:* ${premium ? '✅': '❌'}
@@ -71,7 +70,6 @@ var handler = async (m, { conn }) => {
 
 ╭────⪩ 𝐑𝐄𝐂𝐔𝐑𝐒𝐎𝐒 ⪨
 │⧼💴⧽ *estrellas:* ${poin || 0}
-│⧼🌟⧽ *ɴɪᴠᴇʟ:* ${level || 0}
 │⧼✨⧽ *ᴇxᴘᴇʀɪᴇɴᴄɪᴀ:* ${exp || 0}
 │⧼⚜️⧽ *ʀᴀɴɢᴏ:* ${role}
 ╰───⪨ *𝓤𝓼𝓾𝓪𝓻𝓲𝓸 𝓓𝓮𝓼𝓽𝓪𝓬𝓪𝓭𝓸* ⪩`.trim();
