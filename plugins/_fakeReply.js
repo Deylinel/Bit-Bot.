@@ -3,9 +3,9 @@ import fetch from 'node-fetch'
 export async function before(m, { conn }) {
 let name = '⛄𝑩𝑰𝑻 - 𝑩𝑶𝑻 - 𝑪𝒉𝒂𝒏𝒏𝒆𝒍🌲'
 let imagenes = ["https://i.ibb.co/5k65Cgt/file.jpg",
-"https://i.ibb.co/Cs6Tt9V/Sylph.jpg",
-"https://i.ibb.co/JmcS3kv/Sylph.jpg",
-"https://i.ibb.co/Cs6Tt9V/Sylph.jpg",
+"https://i.ibb.co/kG05JL4/file.jpg",
+"https://i.ibb.co/BggvH9q/file.jpg",
+"https://i.ibb.co/tLxD6KZ/file.jpg",
 "https://i.ibb.co/JmcS3kv/Sylph.jpg",
 "https://i.ibb.co/Cs6Tt9V/Sylph.jpg",
 "https://i.ibb.co/JmcS3kv/Sylph.jpg"]
