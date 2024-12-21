@@ -49,7 +49,7 @@ const defaultMenu = {
 > 「 🌲 FELIZ NAVIDAD ⛄ 」\n
 
 ›   ╔──────¤◎¤──────╗
-› ╭━💚☆ 𝐁𝐢𝐭-𝐁𝐨𝐭.    ☆🎅━╮
+› ╭━💚☆   𝐁𝐢𝐭-𝐁𝐨𝐭.   ☆🎅━╮
 ›   ╚──────¤◎¤──────╝
 ╭━─━─━─≪𖣘≫─━─━─━╮
 ┃❄️ ➬ *Cliente:* %name
@@ -68,7 +68,7 @@ const defaultMenu = {
 ┃❄️ ➬ *Database:*  %totalreg
 ╰━─━─━─≪𖣘≫─━─━─━╯
      
-   ⏤͟͟͞͞★CrowBot-Aiꗄ➺
+   ⏤͟͟͞͞★  BIT-BOT-Aiꗄ➺
 ◆━━━━━━━▣✦▣━━━━━━━━◆ 
  %readmore
 \t\t\t🦌_*𝐋𝐈𝐒𝐓𝐀 𝐃𝐄 𝐂𝐎𝐌𝐀𝐍𝐃𝐎𝐒*_ 🌲
