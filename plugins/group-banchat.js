@@ -1,7 +1,20 @@
 let handler = async (m, { conn, isAdmin, isROwner }) => {
     if (!(isAdmin || isROwner)) return dfail('admin', m, conn)
+
+    // Diseño futurista en el mensaje
     global.db.data.chats[m.chat].isBanned = true
-    await conn.reply(m.chat, `🧑‍💻BIT-BOT FUE DESACTIVADO EN ESTE CHAT`, m, rcanal)
+    const futuristaMsg = `
+🛸💻 **BIT-BOT DESACTIVADO EN ESTE CHAT** 💻🛸
+
+🔒 *El acceso al bot ha sido restringido en este canal, su funcionalidad está suspendida.* 🔒
+
+🚀 **Activado por:** ${m.pushName} 🚀
+
+⚡️ *Si deseas reactivarlo, contacta con un administrador.* ⚡️
+    
+🎛️🔊 *¡Hasta que nos volvamos a conectar!* 🔊🎛️
+    `
+    await conn.reply(m.chat, futuristaMsg, m, rcanal)
     await m.react('✅')
 }
 handler.help = ['banearbot']
