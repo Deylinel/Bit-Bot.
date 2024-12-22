@@ -1,24 +1,19 @@
-let handler = async (m, { conn, isAdmin, isROwner, isCreator }) => {
-    // Número especificado que puede usar el bot, incluso cuando esté baneado
-    const allowedNumber = '50488198573';
+let handler = async (m, { conn, isAdmin, isROwner }) => {
+    // Verificar si el usuario es administrador o el dueño del bot
+    if (!(isAdmin || isROwner)) return dfail('admin', m, conn)
 
-    // Verificar si el usuario es el número permitido o tiene permisos especiales
-    if (!(m.sender === allowedNumber || isAdmin || isROwner || isCreator)) {
-        return dfail('admin', m, conn)
-    }
-
-    // Desactivar el bot para todos los demás, pero permitir que el número especificado lo use
+    // Desactivar bot con diseño futurista
     global.db.data.chats[m.chat].isBanned = true
     const futuristaMsg = `
-🛸💻 **BIT-BOT DESACTIVADO EN ESTE CHAT** 💻🛸
+🛸💻 **BIT-BOT DESACTIVADO** 💻🛸
 
-🔒 *El acceso al bot ha sido restringido en este canal, su funcionalidad está suspendida.* 🔒
+🔒 *Acceso restringido* 🔒
 
-🚀 **Activado por:** ${m.pushName} 🚀
+🚀 *Por:* ${m.pushName} 🚀
 
-⚡️ *Si deseas reactivarlo, contacta con un administrador.* ⚡️
+⚡️ *Reactivar: Contactar admin* ⚡️
     
-🎛️🔊 *¡Hasta que nos volvamos a conectar!* 🔊🎛️
+🎛️🔊 *¡Nos vemos pronto!* 🔊🎛️
     `
     await conn.reply(m.chat, futuristaMsg, m, rcanal)
     await m.react('✅')
