@@ -10,7 +10,7 @@ const handler = async (m, {isOwner, isAdmin, conn, text, participants, args, com
 const oi = `⇢=͟͟͞͞🄰νίऽ૭ : ${pesan}`;
   let teks = `(づ｡◕‿◕｡)づ 💛 Revivan Plantas"\n  ⧼P̼⧽= ${participants.length} ℙ𝐀𝔍𝐈ꪀəﻜ\n\n ${oi}\n\n╭•┈┈•┈┈⊰🔥⃪᜔꫶┈•┈┈•◌ᜓ ݊ ᜒ𝅄\n`;
   for (const mem of participants) {
-    teks += `│ ❏ᝰ. @${mem.id.split('@')[0]}\n`;
+    teks += `│ 🫡ᝰ. @${mem.id.split('@')[0]}\n`;
   }
   teks += `╰─┐ • •ㅤ•-ˏˋ✿ˊˎ-• •ㅤ•
         ꒷︶︶꒷︶︶꒷꒦︶✧꒷₊˚`;
