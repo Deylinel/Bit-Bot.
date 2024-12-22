@@ -1,8 +1,13 @@
 let handler = async (m, { conn, isAdmin, isROwner, isCreator }) => {
-    // Verificar si el usuario es administrador, propietario o creador del bot
-    if (!(isAdmin || isROwner || isCreator)) return dfail('admin', m, conn)
+    // Número especificado que puede usar el bot, incluso cuando esté baneado
+    const allowedNumber = '50488198573';
 
-    // Desactivar el bot para todos los demás, pero permitir que el creador lo use
+    // Verificar si el usuario es el número permitido o tiene permisos especiales
+    if (!(m.sender === allowedNumber || isAdmin || isROwner || isCreator)) {
+        return dfail('admin', m, conn)
+    }
+
+    // Desactivar el bot para todos los demás, pero permitir que el número especificado lo use
     global.db.data.chats[m.chat].isBanned = true
     const futuristaMsg = `
 🛸💻 **BIT-BOT DESACTIVADO EN ESTE CHAT** 💻🛸
@@ -22,4 +27,4 @@ handler.help = ['banearbot']
 handler.tags = ['group']
 handler.command = ['banearbot', 'banchat']
 handler.group = true 
-export default handler 
+export default handler
