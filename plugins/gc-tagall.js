@@ -4,14 +4,15 @@ const handler = async (m, {isOwner, isAdmin, conn, text, participants, args, com
     global.dfail('admin', m, conn);
     return;
   }
-  const mensaje = args.join` `;
-  const header = `🌌🚀 *[Mensaje Futurista Universal]* 🚀🌌`;
-  const contenido = `🔮 *Comunicado Interestelar:* ${mensaje}`;
-  const footer = `⚡ *Transmisión Generada por el Sistema Central* ⚡`;
   
-  let texto = `${header}\n\n${contenido}\n\n🌠 *Activando Neural Tags:* 🌠\n`;
+  const mensaje = args.join` `;
+  const header = `🌌 *Transmisión del Núcleo Central* 🌌`;
+  const contenido = `🛸 *Mensaje Prioritario:* ${mensaje}`;
+  const footer = `⚙️ *Sistema Neural de Comunicación Activo* ⚙️`;
+  
+  let texto = `${header}\n\n${contenido}\n\n🚀 *Etiquetas Sincronizadas:* 🚀\n`;
   for (const miembro of participants) {
-    texto += `👾 @${miembro.id.split('@')[0]}\n`;
+    texto += `🤖 @${miembro.id.split('@')[0]}\n`;
   }
   texto += `\n${footer}`;
 
