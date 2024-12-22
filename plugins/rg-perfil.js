@@ -21,70 +21,56 @@ var handler = async (m, { conn }) => {
         who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender;
     }
 
-    let pp = await conn.profilePictureUrl(who, 'image').catch(_ => imagen1);
-    let { premium, level, genre, birth, description, estrellas, exp, lastclaim, registered, regTime, age, role } = global.db.data.users[who] || {};
-    let username = conn.getName(who);
+    // Fetch user data
+    let userData = global.db.data.users[who] || {};
+    let { premium, level, genre, birth, description, estrellas, exp, lastclaim, registered, regTime, age, role } = userData;
 
-    genre = genre === 0 ? 'No especificado' : genre || 'No especificado';
-    age = registered ? (age || 'Desconocido') : 'Sin especificar';
-    birth = birth || 'No Establecido';
-    description = description || 'Sin Descripción';
-    role = role || 'Aldeano';
+    // Format data with futuristic elements (placeholders for actual implementation)
+    let username = conn.getName(who);
+    let userAvatar = await conn.profilePictureUrl(who, 'image').catch(_ => 'https://i.imgur.com/DefaultAvatar.jpg'); // Replace with futuristic avatar generation
+    genre = genre === 0 ? 'Desconocido (Actualizando Base de Datos BioGenéticos)' : genre || 'Desconocido (Actualizando Base de Datos BioGenéticos)';
+    age = registered ? (age || 'Desconocido') : 'Sin Especificar (Calibrando Escáner Temporal)';
+    birth = birth || 'No Establecido (Consultando Archivos Galácticos)';
+    description = description || 'Sin Descripción (Análisis de Personalidad en Proceso)';
+    role = role || 'Aldeano (Nivel de Autoridad Pendiente)';
 
     let isMarried = who in global.db.data.marriages;
     let partner = isMarried ? global.db.data.marriages[who] : null;
-    let partnerName = partner ? conn.getName(partner) : 'Nadie';
-    let api = await axios.get(`https://deliriussapi-oficial.vercel.app/tools/country?text=${PhoneNumber('+' + who.replace('@s.whatsapp.net', '')).getNumber('international')}`);
-    let userNationalityData = api.data.result;
-    let userNationality = userNationalityData ? `${userNationalityData.name} ${userNationalityData.emoji}` : 'Desconocido';
+    let partnerName = partner ? conn.getName(partner) : 'Ninguno';
 
-    let noprem = `
-╭─〘 👤 *USER PROFILE* 👤 〙─╮
-💬 *Name:* ${username}  
-🛠️ *Age:* ${age}  
-⚙️ *Gender:* ${genre}  
-🎉 *Birthday:* ${birth}  
-💍 *Marital Status:* ${isMarried ? partnerName : 'Single'}  
-📖 *Description:* ${description}  
-🔒 *Registered:* ${registered ? '✅' : '❌'}  
-🌍 *Country:* ${userNationality}  
+    // Fetch and format user's nationality using a futuristic API (replace with actual implementation)
+    let apiResponse = await fetch(`https://api.futuristic-nationalities.com/user/${PhoneNumber('+' + who.replace('@s.whatsapp.net', '')).getNumber('international')}`);
+    let userNationalityData = await apiResponse.json();
+    let userNationality = userNationalityData ? `${userNationalityData.name} ${userNationalityData.emoji}` : 'Desconocido (Buscando en Red Interplanetaria)';
 
-🔷 **RESOURCES** 🔷  
-🌌 *Stars:* ${estrellas || 0}  
-✨ *Experience:* ${exp || 0}  
-🪐 *Rank:* ${role}  
-🚀 *Premium:* ${premium ? '✅' : '❌'}  
-╰────────────────────╯`.trim();
+    // Construct profile message with a futuristic theme
+    let profileMessage = `
+╭──⪩  ░░░░░░░░░░░░░░░░░░░░░░  ⪨
+│⧼⧽ *Identificador Biométrico:*  ${username}
+│⧼⧽ *Edad Biológica:*  ${age}
+│⧼⚧️⧽ *Configuración Genética:*  ${genre}
+│⧼⧽ *Fecha de Activación:*  ${birth}
+│⧼‍❤️‍⧽ *Enlace Intergaláctico:*  ${isMarried ? partnerName : 'Ninguno'}
+│ *Descripción Personal:*  ${description}
+│⧼⧽ *Registro en la Red:*  ${registered ? 'Activado' : 'Pendiente'}
+│⧼⧽ *Origen Interestelar:*  ${userNationality}
 
-    let prem = `
-🛸 **── USER PREMIUM ──**  
-═══════════════════════  
-🔷 **USER INFORMATION** 🔷  
-📡 *Username:* ${username}  
-🛠️ *Age:* ${age}  
-⚙️ *Gender:* ${genre}  
-🎂 *Birthday:* ${birth}  
-💍 *Marital Status:* ${isMarried ? partnerName : 'Single'}  
-📖 *Description:* ${description}  
-🔒 *Registered:* ${registered ? '✅' : '❌'}  
-🌍 *Country:* ${userNationality}  
+╰───────────────────⪨
 
-═══════════════════════  
-🌟 **EXCLUSIVE FEATURES** 🌟  
-🛸 *Stars:* ${estrellas || 0}  
-💫 *Experience:* ${exp || 0}  
-⚜️ *Rank:* ${role}  
-═══════════════════════  
-🚀 *Outstanding User of the Future* 🚀  
+╭────⪩   ░░░░░░░░░░░░░░░░░░░░░░  ⪨
+│⧼⧽ *Unidades Estelares:*  ${estrellas || 0}
+│⧼✨⧽ *Experiencia Acumulada:*  ${exp || 0}
+│⧼⚜️⧽ *Rango de Autoridad:*  ${role}
+╰───⪨  ░░░░░░░░░░░░░░░░░░░░░░  ⪨
+
+*Actualizando Base de Datos Intergaláctica...*
 `.trim();
 
-    conn.sendFile(m.chat, pp, 'profile.jpg', `${premium ? prem.trim() : noprem.trim()}`, m, { mentions: [who] });
+    conn.sendFile(m.chat, userAvatar, 'perfil.jpg', profileMessage, m, { mentions: [who] });
 };
 
 handler.help = ['profile'];
 handler.register = true;
 handler.group = true;
 handler.tags = ['rg'];
-handler.command = ['profile', 'perfil'];
-
-export default handler;
+ 
