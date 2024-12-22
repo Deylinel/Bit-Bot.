@@ -67,4 +67,4 @@ await this.sendMessage(m.chat, { text: `🙃 ${usuario} *Desactivó los mensajes
 console.log({messageStubType: m.messageStubType,
 messageStubParameters: m.messageStubParameters,
 type: WAMessageStubType[m.messageStubType], 
-})}}
+})}} 
