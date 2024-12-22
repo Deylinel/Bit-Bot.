@@ -1,46 +1,51 @@
 const handler = async (m, { isOwner, isAdmin, conn, text, participants, args, command, usedPrefix }) => {
-
-  if (usedPrefix == 'a' || usedPrefix == 'A') return;
+  
+  // Restringir el uso de ciertos prefijos si no es admin u owner
+  if (usedPrefix === 'a' || usedPrefix === 'A') return;
 
   if (!(isAdmin || isOwner)) {
     global.dfail('admin', m, conn);
     throw false;
   }
 
-  const pesan = args.join` `;
-  const oi = `⇢=͟͟͞͞     ${pesan}`; // Futuristic message icon
+  const mensaje = args.join` `;
+  const iconoFuturista = `🚀 ⇢ ${mensaje}`; // Icono futurista para mensajes
+  
+  let texto = `╭══✦ 🌌 **Conexión Intergaláctica** ✦══╮\n`;
+  texto += `🌱 *Revivamos las plantas del futuro*\n`;
+  texto += `👾 *Participantes conectados:* ${participants.length}\n`;
+  texto += `\n💬 Mensaje: ${iconoFuturista}\n\n`;
 
-  let teks = `(づ｡◕‿◕｡)づ   Revivan Plantas  \n   Participantes: ${participants.length} \n\n ${oi}\n\n╭═  Conexiones Intergalácticas   ═╮\n`;
-
-  // Function to get country code based on prefix (replace with your implementation)
-  const getCountryCode = (prefix) => {
-    // Implement logic to lookup country code based on prefix
-    // You can use an external library or a local database
-    // This is a placeholder for illustration
-    const countryCodes = {
+  // Función para obtener el código del país basado en el prefijo del número
+  const obtenerCodigoPais = (prefijo) => {
+    const codigosPais = {
       '504': '🇭🇳', // Honduras
-      '1': '🇺🇸', // USA (example)
+      '1': '🇺🇸', // USA
+      '34': '🇪🇸', // España
+      '52': '🇲🇽', // México
     };
-    return countryCodes[prefix] || ''; // Unknown flag for unsupported prefixes
+    return codigosPais[prefijo] || '🌍'; // Retorna 🌍 si el prefijo no está registrado
   };
 
-  for (const mem of participants) {
-    const id = mem.id.split('@')[0];
-    // Extract phone number prefix (assuming phone number is stored in 'id')
-    const prefix = id.slice(0, 3); // Get first 3 digits (adjust based on phone number format)
-    const countryCode = getCountryCode(prefix);
-    teks += `│   ${countryCode} @${id}\n`;
+  // Listar a los participantes con su respectivo país
+  for (const miembro of participants) {
+    const id = miembro.id.split('@')[0];
+    const prefijo = id.slice(0, 3); // Ajustar según formato de números
+    const codigoPais = obtenerCodigoPais(prefijo);
+    texto += `👤 ${codigoPais} @${id}\n`;
   }
 
-  teks += `╰═───    ¡Hagamos un futuro más verde!   ───═╮\n`;
+  texto += `╰═════✦ 🌱 *¡Cultivemos el futuro!* ✦═════╯`;
 
-  conn.sendMessage(m.chat, { text: teks, mentions: participants.map((a) => a.id) });
+  // Enviar mensaje a todos los participantes mencionados
+  conn.sendMessage(m.chat, { text: texto, mentions: participants.map((a) => a.id) });
 };
 
-handler.help = ['todos <mesaje>'];
+// Metadatos del comando
+handler.help = ['todos <mensaje>'];
 handler.tags = ['group'];
 handler.command = /^(tagall|invocar|marcar|todos|invocación)$/i;
 handler.admin = true;
 handler.group = true;
+
 export default handler;
- 
