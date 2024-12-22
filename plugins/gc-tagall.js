@@ -10,14 +10,18 @@ const handler = async (m, { isOwner, isAdmin, conn, text, participants, args, co
   
   const getFlag = (phone) => {
     const countryFlags = {
-      '1': '🇺🇸', // Estados Unidos
-      '44': '🇬🇧', // Reino Unido
-      '52': '🇲🇽', // México
-      '91': '🇮🇳', // India
-      // Agrega más prefijos y banderas según sea necesario
+      '1': '🇺🇸', '44': '🇬🇧', '52': '🇲🇽', '91': '🇮🇳', '504': '🇭🇳', '1684': '🇦🇸', 
+      '358': '🇦🇽', '93': '🇦🇫', '374': '🇦🇲', '54': '🇦🇷', '297': '🇦🇼', '971': '🇦🇪', 
+      '355': '🇦🇱', '672': '🇦🇶', '61': '🇦🇺', '376': '🇦🇩', '372': '🇦🇮', '244': '🇦🇴', 
+      '43': '🇦🇹', '247': '🇦🇨', '994': '🇦🇿', '973': '🇧🇭', '880': '🇧🇩', '375': '🇧🇾',
+      '32': '🇧🇪', '501': '🇧🇿', '229': '🇧🇯', '441481': '🇬🇬', '441534': '🇯🇪', '441624': '🇮🇲',
+      // Agregar más prefijos según sea necesario
     };
-    const prefix = phone.split('@')[0].slice(0, 3);
-    return countryFlags[prefix] || '🏳'; // Bandera blanca para otros
+    const prefix = phone.split('@')[0];
+    for (const key in countryFlags) {
+      if (prefix.startsWith(key)) return countryFlags[key];
+    }
+    return '🏳'; // Bandera blanca para otros
   };
 
   const pesan = args.join` `;
@@ -40,4 +44,3 @@ handler.group = true;
 
 export default handler;
 ```
-
