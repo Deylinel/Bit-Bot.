@@ -13,7 +13,7 @@ let txt = `*Hola!, te invito a unirte a los grupos oficiales de de BIT - BOT - A
 ➠ Enlace anulado? entre aquí! 
 
 Canal :
-*✰* ${canal}
+*✰* https://whatsapp.com/channel/0029VawF8fBBvvsktcInIz3m 
 
 > 🚩 ${textbot}`
 await conn.sendFile(m.chat, img, "Thumbnail.jpg", txt, m, null, rcanal)
