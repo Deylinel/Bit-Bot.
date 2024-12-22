@@ -2,6 +2,7 @@ import { promises } from 'fs'
 import { join } from 'path'
 import fetch from 'node-fetch'
 import { xpRange } from '../lib/levelling.js'
+
 let Styles = (text, style = 1) => {
   var xStr = 'abcdefghijklmnopqrstuvwxyz1234567890'.split('');
   var yStr = Object.freeze({
@@ -20,69 +21,69 @@ let Styles = (text, style = 1) => {
   });
   return output.join('');
 };
+
 let tags = {
-  'anime': '🧧 ANIME 🎐',
-  'main': '❗ INFO ❕',
-  'search': '🔎 SEARCH 🔍',
-  'game': '🕹️ GAME 🎮',
-  'serbot': '⚙️ SUB BOTS 🤖',
-  'rpg': '🌐 RPG 🥇',
-  'rg': '🎑 REGISTRO 🎟️',
-  'sticker': '💟 STICKER 🏷️',
-  'img': '🖼️ IMAGE 🎇',
-  'group': '👥 GROUPS 📢',
-//  'logo': 'MAKER',
-  'nable': '🎛️ ON / OFF 🔌', 
-  'premium': '💎 PREMIUM 👑',
-  'downloader': '📥 DOWNLOAD 📤',
+  'anime': '🖥️ ANIME 🎮',
+  'main': '💡 INFO 🧠',
+  'search': '🔍 SEARCH 🔎',
+  'game': '🎮 GAME 🕹️',
+  'serbot': '⚙️ SYSTEM BOTS 🤖',
+  'rpg': '🌐 RPG 🏆',
+  'rg': '📜 REGISTER 📋',
+  'sticker': '🎭 STICKER 🏷️',
+  'img': '🖼️ IMAGE 🖌️',
+  'group': '👥 GROUPS 💬',
+  'nable': '🔌 ON / OFF 💻',
+  'premium': '🔓 PREMIUM 🔐',
+  'downloader': '📥 DOWNLOAD 💾',
   'tools': '🔧 TOOLS 🛠️',
-  'fun': '🎉 FUN 🎊',
-  'nsfw': '🔞 NSFW 📛', 
-  'cmd': '🧮 DATABASE 🖥️',
-  'owner': '👤 OWNER 👁️', 
-  'audio': '📣 AUDIOS 🔊', 
-  'advanced': '🗝️ ADVANCED 📍',
+  'fun': '🎉 FUN 🎮',
+  'nsfw': '🔞 NSFW 🚫', 
+  'cmd': '💻 DATABASE 🖥️',
+  'owner': '👤 OWNER 🕹️', 
+  'audio': '🔊 AUDIO 🎧', 
+  'advanced': '🔑 ADVANCED ⚙️',
 }
 
 const defaultMenu = {
   before: `
-> 「 🌲 FELIZ NAVIDAD ⛄ 」\n
+> 「 💻 SYSTEM STATUS 」\n
 
 ›   ╔──────¤◎¤──────╗
-› ╭━💚☆    𝐁𝐢𝐭-𝐁𝐨𝐭.   ☆🎅━╮
+› ╭━💻☆    𝐁𝐢𝐭-𝐁𝐨𝐭.   ☆⚙️━╮
 ›   ╚──────¤◎¤──────╝
 ╭━─━─━─≪𖣘≫─━─━─━╮
-┃❄️ ➬ *Cliente:* %name
-┃❄️ ➬ *Estrellas:* %limit
-┃❄️ ➬ *Nivel:* %level [ %xp4levelup Xp Para Subir De Nivel]
-┃❄️ ➬ *Xp:* %exp / %maxexp
-┃❄️ ➬ *TotalXp:* %totalexp
+┃⚙️ ➬ *Client:* %name
+┃⚙️ ➬ *Stars:* %limit
+┃⚙️ ➬ *Level:* %level [ %xp4levelup Xp to Level Up]
+┃⚙️ ➬ *Xp:* %exp / %maxexp
+┃⚙️ ➬ *TotalXp:* %totalexp
  ╰━─━─━─≪𖣘≫─━─━─━╯
 ╔──────¤◎¤──────╗
-┋#    ❄️   *𝐈 N F O  ‹‹❑*
+┋#    ⚙️   *𝐈 N F O  ‹‹❑*
 ╚──────¤◎¤──────╝
 ╭━─━─━─≪𖣘≫─━─━─━╮
-┃❄️ ➬ *Modo:* %mode
-┃❄️ ➬ *Prefijo:* [ *%_p* ]
-┃❄️ ➬ *Rutina:* %muptime 
-┃❄️ ➬ *Database:*  %totalreg
+┃⚙️ ➬ *Mode:* %mode
+┃⚙️ ➬ *Prefix:* [ *%_p* ]
+┃⚙️ ➬ *Uptime:* %muptime 
+┃⚙️ ➬ *Database:*  %totalreg
 ╰━─━─━─≪𖣘≫─━─━─━╯
      
-   ⏤͟͟͞͞★  BIT-BOT - AIꗄ➺
+   ⏤͟͟͞͞★  BIT-BOT - SYSTEM  ⚡
 ◆━━━━━━━▣✦▣━━━━━━━━◆ 
  %readmore
-\t\t\t🦌_*𝐋𝐈𝐒𝐓𝐀 𝐃𝐄 𝐂𝐎𝐌𝐀𝐍𝐃𝐎𝐒*_ 🌲
+\t\t\t⚡_*𝐂𝐎𝐌𝐌𝐀𝐍𝐃 𝐋𝐈𝐒𝐓*_ 💻
 `.trimStart(),
   header: '╭═════⊹⊱≼「 *%category* 」≽⊰⊹════•',
-  body: '┃⛄› ✧ . %cmd %islimit %isPremium\n',
-  footer: '╰═════⊹⊱🎁⊰⊹═════╯',
+  body: '┃⚙️› ✧ . %cmd %islimit %isPremium\n',
+  footer: '╰═════⊹⊱⚡⊰⊹═════╯',
   after: `© ${textbot}`,
 }
 
 let handler = async (m, { conn, usedPrefix: _p, __dirname }) => {
   try {
      let tag = `@${m.sender.split("@")[0]}`
-    let mode = global.opts["self"] ? "Privado" : "Publico"
+    let mode = global.opts["self"] ? "Private" : "Public"
     let _package = JSON.parse(await promises.readFile(join(__dirname, '../package.json')).catch(_ => ({}))) || {}
     let { exp, limit, level } = global.db.data.users[m.sender]
     let { min, xp, max } = xpRange(level, global.multiplier)
@@ -199,13 +200,11 @@ let handler = async (m, { conn, usedPrefix: _p, __dirname }) => {
     let pp14 = 'https://i.ibb.co/JmcS3kv/Sylph.jpg'
     let pp15 = 'https://i.ibb.co/Cs6Tt9V/Sylph.jpg'
     let img = 'https://i.ibb.co/h14z1FW/file.jpg'
-    await m.react('⛄')
-   // await conn.sendMessage(m.chat, { video: { url: [pp, pp2, pp3, pp4, pp5, pp6, pp7, pp8, pp9, pp10, pp11, pp12, pp13, pp14, pp15].getRandom() }, gifPlayback: true, caption: text.trim(), mentions: [m.sender] }, { quoted: estilo })
+    await m.react('⚙️')
     await conn.sendFile(m.chat, img, 'thumbnail.jpg', text.trim(), m, null, rcanal)
-   //await conn.sendAi(m.chat, botname, textbot, text.trim(), img, img, canal, estilo)
 
   } catch (e) {
-    conn.reply(m.chat, '❎ Lo sentimos, el menú tiene un error.', m)
+    conn.reply(m.chat, '❎ Oops, the menu has an error.', m)
     throw e
   }
 }
@@ -215,7 +214,6 @@ handler.tags = ['main']
 handler.command = ['allmenu', 'menucompleto', 'menúcompleto', 'menú', 'menu'] 
 handler.register = true 
 export default handler
-
 
 const more = String.fromCharCode(8206)
 const readMore = more.repeat(4001)
@@ -227,32 +225,33 @@ function clockString(ms) {
   return [h, m, s].map(v => v.toString().padStart(2, 0)).join(':')
 }
 
-  var ase = new Date();
-  var hour = ase.getHours();
+var ase = new Date();
+var hour = ase.getHours();
 switch(hour){
-  case 0: hour = 'una linda noche 🌙'; break;
-  case 1: hour = 'una linda noche 💤'; break;
-  case 2: hour = 'una linda noche 🦉'; break;
-  case 3: hour = 'una linda mañana ✨'; break;
-  case 4: hour = 'una linda mañana 💫'; break;
-  case 5: hour = 'una linda mañana 🌅'; break;
-  case 6: hour = 'una linda mañana 🌄'; break;
-  case 7: hour = 'una linda mañana 🌅'; break;
-  case 8: hour = 'una linda mañana 💫'; break;
-  case 9: hour = 'una linda mañana ✨'; break;
-  case 10: hour = 'un lindo dia 🌞'; break;
-  case 11: hour = 'un lindo dia 🌨'; break;
-  case 12: hour = 'un lindo dia ❄'; break;
-  case 13: hour = 'un lindo dia 🌤'; break;
-  case 14: hour = 'una linda tarde 🌇'; break;
-  case 15: hour = 'una linda tarde 🥀'; break;
-  case 16: hour = 'una linda tarde 🌹'; break;
-  case 17: hour = 'una linda tarde 🌆'; break;
-  case 18: hour = 'una linda noche 🌙'; break;
-  case 19: hour = 'una linda noche 🌃'; break;
-  case 20: hour = 'una linda noche 🌌'; break;
-  case 21: hour = 'una linda noche 🌃'; break;
-  case 22: hour = 'una linda noche 🌙'; break;
-  case 23: hour = 'una linda noche 🌃'; break;
+  case 0: hour = 'a quiet night 🌙'; break;
+  case 1: hour = 'a peaceful night 💤'; break;
+  case 2: hour = 'a calm night 🦉'; break;
+  case 3: hour = 'a bright morning ✨'; break;
+  case 4: hour = 'a fresh morning 💫'; break;
+  case 5: hour = 'a crisp morning 🌅'; break;
+  case 6: hour = 'a cool morning 🌄'; break;
+  case 7: hour = 'a bright morning 🌅'; break;
+  case 8: hour = 'a new morning 💫'; break;
+  case 9: hour = 'a crisp morning ✨'; break;
+  case 10: hour = 'a productive day 🌞'; break;
+  case 11: hour = 'a dynamic day 🌨'; break;
+  case 12: hour = 'a bright day ❄'; break;
+  case 13: hour = 'a clear day 🌤'; break;
+  case 14: hour = 'a smooth afternoon 🌇'; break;
+  case 15: hour = 'a quiet afternoon 🥀'; break;
+  case 16: hour = 'a peaceful afternoon 🌹'; break;
+  case 17: hour = 'a productive evening 🌆'; break;
+  case 18: hour = 'a serene night 🌙'; break;
+  case 19: hour = 'a cool night 🌃'; break;
+  case 20: hour = 'a digital night 🌌'; break;
+  case 21: hour = 'a tech-filled night 🌃'; break;
+  case 22: hour = 'a calm night 🌙'; break;
+  case 23: hour = 'a peaceful night 🌃'; break;
 }
-  var greeting = "espero que tengas " + hour; 
+
+var greeting = "hope you have " + hour;
