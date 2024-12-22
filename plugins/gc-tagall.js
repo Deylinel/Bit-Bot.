@@ -6,32 +6,32 @@ const handler = async (m, { isOwner, isAdmin, conn, text, participants, args, co
     global.dfail('admin', m, conn);
     throw false;
   }
-  
+
   const getFlag = (phone) => {
     const countryFlags = {
-      // Puedes agregar más prefijos y banderas aquí
+      // Puedes agregar más prefijos y banderas si lo necesitas
     };
     const prefix = phone.split('@')[0].slice(0, 3);
-    return countryFlags[prefix] || '🌐'; // Predeterminado a un globo terráqueo
+    return countryFlags[prefix] || '🚩'; // Bandera predeterminada
   };
 
   const pesan = args.join` `;
-  const oi = `🛸⋆⟢ ${pesan}`;
+  const oi = `⚡💬 𝐒𝐈𝐒𝐓𝐄𝐌𝐀: ${pesan}`;
   
-  let teks = `╔═══❖•ೋ°°ೋ•❖═══╗\n      🌌 𝐌𝐔𝐋𝐓𝐈-𝐃𝐈𝐌𝐄𝐍𝐒𝐈𝐎𝐍𝐀𝐋 𝐂𝐀𝐋𝐋 🌌\n╚═══❖•ೋ°°ೋ•❖═══╝\n\n`;
-  teks += `✦ **𝐂𝐨𝐧𝐧𝐞𝐜𝐭𝐢𝐧𝐠 𝐭𝐨 𝐏𝐚𝐫𝐭𝐢𝐜𝐢𝐩𝐚𝐧𝐭𝐬...** ✦\n`;
-  teks += `🌟 **Participantes en órbita**: ${participants.length}\n\n`;
-  teks += `🚀: *${oi}*\n\n`;
-  teks += `╔═━──━────━═⊰•⊱═━────━──━═╗\n`;
-
+  let teks = `╔═━────━═⊰ **𝐂𝐎𝐌𝐌𝐀𝐍𝐃 𝐀𝐂𝐓𝐈𝐕𝐀𝐓𝐄𝐃** ⊱═━────━═╗\n`;
+  teks += `\n🌌 **𝐒𝐈𝐍𝐆𝐔𝐋𝐀𝐑 𝐍𝐄𝐓𝐖𝐎𝐑𝐊 𝐂𝐀𝐋𝐋** 🌌\n`;
+  teks += `👾 **𝐀𝐜𝐭𝐢𝐯𝐨𝐬**: ${participants.length}\n\n`;
+  teks += `${oi}\n\n`;
+  teks += `╭───≽「 **𝐌𝐀𝐑𝐂𝐀 𝐔𝐍𝐈𝐕𝐄𝐑𝐒𝐀𝐋** 」───≼\n`;
+  
   for (const mem of participants) {
     const flag = getFlag(mem.id);
-    teks += `⟡ ✦ ${flag} @${mem.id.split('@')[0]}\n`;
+    teks += `┃ ✦ ${flag} @${mem.id.split('@')[0]}\n`;
   }
-  
-  teks += `╚═━──━────━═⊰•⊱═━────━──━═╝\n`;
-  teks += `💾 **𝔻𝔸𝕋𝔸 𝕌ℙ𝕃𝕆𝔸𝔻 𝕊𝕌ℂℂ𝔼𝕊𝕊𝔽𝕌𝕃** 💾\n`;
-  teks += `⚡ *Sistema en línea: Todos listos para interactuar* ⚡`;
+
+  teks += `╰───━═⊰ **𝐓𝐄𝐋𝐄𝐌𝐄𝐓𝐑𝐈𝐀 𝐂𝐎𝐌𝐏𝐋𝐄𝐓𝐀** ⊱━────╯\n`;
+  teks += `\n🛸 **𝐒𝐓𝐀𝐓𝐔𝐒**: Preparado para interacción ⚙️`;
+  teks += `\n📡 **𝐍𝐎𝐓𝐈𝐅𝐈𝐂𝐀𝐂𝐈𝐎𝐍 𝐄𝐍𝐕𝐈𝐀𝐃𝐀** ✅`;
 
   conn.sendMessage(m.chat, { text: teks, mentions: participants.map((a) => a.id) });
 };
