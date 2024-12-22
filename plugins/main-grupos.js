@@ -6,7 +6,7 @@ const more = String.fromCharCode(8206)
 const readMore = more.repeat(4001)
 let txt = `*Hola!, te invito a unirte a los grupos oficiales de de CrowBot-Ai para convivir con la comunidad :D*
 
-*✰* ${https://chat.whatsapp.com/HvyqEIGfMOL4h5EOkzbRzC}
+*✰* https://chat.whatsapp.com/HvyqEIGfMOL4h5EOkzbRzC
 
 *─ׄ─ׅ─ׄ⭒─ׄ─ׅ─ׄ⭒─ׄ─ׅ─ׄ⭒─ׄ─ׅ─ׄ⭒─ׄ─ׅ─ׄ⭒─ׄ─ׅ─ׄ*
 
