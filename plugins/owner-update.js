@@ -11,4 +11,4 @@ handler.tags = ['owner']
 handler.command = ['update', 'actualizar', 'fix', 'fixed'] 
 handler.rowner = true
 
-export default handler
+export default handler 
