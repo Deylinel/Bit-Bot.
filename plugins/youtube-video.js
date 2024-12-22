@@ -8,7 +8,7 @@ if (!urls) return conn.reply(m.chat, `Resultado no Encontrado.`, m, rcanal).then
 if (urls.length < text) return conn.reply(m.chat, `Resultado no Encontrado.`, m, rcanal).then(_ => m.react('✖️'))
 let user = global.db.data.users[m.sender]
 
-await m.react('🕓')
+await m.react('🫡')
 try {
 let v = urls[0]
 let { title, size, quality, thumbnail, dl_url } = await Starlights.ytmp4(v)
@@ -16,7 +16,7 @@ let { title, size, quality, thumbnail, dl_url } = await Starlights.ytmp4(v)
 if (size.split('MB')[0] >= limit) return m.reply(`El archivo pesa mas de ${limit} MB, se canceló la Descarga.`).then(_ => m.react('✖️'))
 
 await conn.sendFile(m.chat, dl_url, title + '.mp4', `*» Título* : ${title}\n*» Calidad* : ${quality}`, m, false, { asDocument: user.useDocument })
-await m.react('✅')
+await m.react('🎉')
 } catch {
 await m.react('✖️')
 }}
