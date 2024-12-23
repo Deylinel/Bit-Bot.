@@ -12,10 +12,10 @@ export async function before(m, { conn, participants, groupMetadata }) {
     let user = `@${m.messageStubParameters[0].split`@`[0]}`
     let welcome = chat.sWelcome ? chat.sWelcome.replace('@user', () => user) : `
     ╭─【 💻 *BIENVENIDO AL SISTEMA* 💻 】───
-    │🌟 *Usuario Detectado:* @${m.messageStubParameters[0].split`@`[0]}
+    │🌟 *Usuario Detectado:*   `````@${m.messageStubParameters[0].split`@`[0]}
     │⚡ *Grupo:* ${groupMetadata.subject}
     │🚀 *¡Conexión Establecida...* 
-    │🔵 *Bienvenido a la red de ${groupMetadata.subject}*
+    │🔵 *Bienvenido a la red de $    `````{groupMetadata.subject}*
     │🌐 *Explora el sistema.*
     ╰────────────────────────────┈ ⬇️`
     
