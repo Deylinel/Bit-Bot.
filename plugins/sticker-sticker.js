@@ -104,4 +104,4 @@ const isUrl = (text) => {
       'gi'
     )
   );
-};
+}; 
