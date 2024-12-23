@@ -1,59 +1,43 @@
-  import { sticker } from '../lib/sticker.js';
+ import { sticker } from '../lib/sticker.js';
 // import uploadFile from '../lib/uploadFile.js';
 // import uploadImage from '../lib/uploadImage.js';
 // import { webp2png } from '../lib/webp2mp4.js';
 
-let handler = async (m, { conn, args, usedPrefix, command }) => {
+let handler = async (m, { conn, args }) => {
   let stiker = false;
 
   try {
-    let q = m.quoted ? m.quoted : m;
-    let mime = (q.msg || q).mimetype || q.mediaType || '';
+    const q = m.quoted ? m.quoted : m;
+    const mime = (q.msg || q).mimetype || q.mediaType || '';
+    const isMedia = /webp|image|video/.test(mime);
 
-    if (/webp|image|video/g.test(mime)) {
-      if (/video/g.test(mime) && (q.msg || q).seconds > 8) {
-        return m.reply(
-          "Error: Los videos no pueden exceder los 8 segundos de duración."
-        );
-      }
+    if (isMedia || (args[0] && isUrl(args[0]))) {
+      const input = isMedia ? await q.download?.() : args[0];
 
-      let img = await q.download?.();
-      if (!img) {
+      if (!input) {
         return conn.reply(
           m.chat,
-          "> *Error: No se detectó un archivo multimedia válido. Envía una imagen, video o gif antes de usar este comando*.",
+          "Error: No se detectó un archivo multimedia válido. Envía una imagen, video o gif antes de usar este comando.",
           m
         );
       }
 
-      let out;
-      try {
-        stiker = await sticker(img, false, global.packsticker, global.author);
-      } catch (e) {
-        console.error("Error en la conversión inicial:", e);
-        if (/webp/g.test(mime)) {
-          out = await webp2png(img);
-        } else if (/image/g.test(mime)) {
-          out = await uploadImage(img);
-        } else if (/video/g.test(mime)) {
-          out = await uploadFile(img);
-        }
-
-        if (typeof out !== 'string') {
-          out = await uploadImage(img);
-        }
-
-        stiker = await sticker(false, out, global.packsticker, global.author);
-      }
-    } else if (args[0]) {
-      if (isUrl(args[0])) {
-        stiker = await sticker(false, args[0], global.packsticker, global.author);
-      } else {
-        return m.reply("Error: La URL proporcionada no es válida.");
-      }
+      // Procesar archivo
+      stiker = await processMedia(input, mime);
+    } else {
+      return conn.reply(
+        m.chat,
+        "Error: Proporcione un archivo multimedia válido o una URL correcta.",
+        m
+      );
     }
   } catch (e) {
     console.error("Error general:", e);
+    conn.reply(
+      m.chat,
+      "Ocurrió un error al generar el sticker. Intenta nuevamente.",
+      m
+    );
   } finally {
     if (stiker) {
       conn.sendFile(
@@ -70,7 +54,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
             externalAdReply: {
               showAdAttribution: false,
               title: global.packsticker || 'Sticker generado',
-              body: "BIT - BOT.",
+              body: "Generado por un sistema automatizado avanzado.",
               mediaType: 2,
               sourceUrl: global.redes || '',
               thumbnail: global.icons || null
@@ -82,11 +66,54 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
     } else {
       conn.reply(
         m.chat,
-        "*⚠️Error⚠️: *La conversión no pudo completarse. nose encontró ningún archivo* 📂 .",
+        "Error: No se pudo completar la conversión. Verifica el archivo o URL y vuelve a intentarlo.",
         m
       );
     }
   }
+};
+
+// Función modular para procesar medios
+const processMedia = async (input, mime) => {
+  try {
+    // Intentar la conversión inicial
+    return await sticker(
+      input,
+      false,
+      global.packsticker || 'Sticker',
+      global.author || 'Bot'
+    );
+  } catch (e) {
+    console.error("Error en la conversión inicial:", e);
+
+    // Fallback: Subir archivo y convertir
+    let out;
+    if (/webp/.test(mime)) {
+      out = await webp2png(input);
+    } else if (/image/.test(mime)) {
+      out = await uploadImage(input);
+    } else if (/video/.test(mime)) {
+      out = await uploadFile(input);
+    } else {
+      throw new Error("Tipo de archivo no soportado.");
+    }
+
+    if (typeof out !== 'string') {
+      throw new Error("Error al procesar el archivo multimedia.");
+    }
+
+    return await sticker(
+      false,
+      out,
+      global.packsticker || 'Sticker',
+      global.author || 'Bot'
+    );
+  }
+};
+
+// Función para validar URLs
+const isUrl = (text) => {
+  return /^https?:\/\/[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)$/i.test(text);
 };
 
 handler.help = ['sticker <imagen>', 'sticker <url>'];
@@ -96,12 +123,3 @@ handler.register = true;
 handler.command = ['s', 'sticker', 'stiker'];
 
 export default handler;
-
-const isUrl = (text) => {
-  return text.match(
-    new RegExp(
-      /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)(jpe?g|gif|png)/,
-      'gi'
-    )
-  );
-}; 
