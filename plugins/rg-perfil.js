@@ -12,11 +12,12 @@ const loadMarriages = () => {
 };
 
 const sendRegistrationMessage = async (conn, who) => {
-    const channelJid = '0029VawF8fBBvvsktcInIz3m@g.us'; // JID del canal
+    const channelJid = '0029VawF8fBBvvsktcInIz3m@broadcast'; // Ajuste del JID del canal
     const username = conn.getName(who);
     const message = `🎉 *Nuevo Registro* 🎉\n\nEl usuario *${username}* se ha registrado exitosamente. ¡Bienvenido/a al sistema!`;
 
     try {
+        console.log(`Enviando mensaje al canal: ${channelJid}`);
         await conn.sendMessage(channelJid, { text: message });
         console.log(`Mensaje enviado exitosamente al canal: ${channelJid}`);
     } catch (error) {
@@ -34,80 +35,66 @@ var handler = async (m, { conn }) => {
         who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender;
     }
 
-    let pp = await conn.profilePictureUrl(who, 'image').catch(_ => './default-profile.jpg'); // Imagen predeterminada si no existe
-    let { premium, level, genre, birth, description, estrellas, exp, lastclaim, registered, regTime, age, role } = global.db.data.users[who] || {};
-    let username = conn.getName(who);
-
-    genre = genre === 0 ? 'No especificado' : genre || 'No especificado';
-    age = registered ? (age || 'Desconocido') : 'Sin especificar';
-    birth = birth || 'No Establecido';
-    description = description || 'Sin Descripción';
-    role = role || 'Aldeano';
-
-    let isMarried = who in global.db.data.marriages;
-    let partner = isMarried ? global.db.data.marriages[who] : null;
-    let partnerName = partner ? conn.getName(partner) : 'Nadie';
-
-    // Obtener datos de nacionalidad usando el API
-    let userNationalityData;
     try {
-        let api = await fetch(`https://deliriussapi-oficial.vercel.app/tools/country?text=${PhoneNumber('+' + who.replace('@s.whatsapp.net', '')).getNumber('international')}`);
-        let response = await api.json();
-        userNationalityData = response.result;
-    } catch (error) {
-        console.error('Error al obtener datos de nacionalidad:', error);
-        userNationalityData = null;
-    }
-    let userNationality = userNationalityData ? `${userNationalityData.name} ${userNationalityData.emoji}` : 'Desconocido';
+        let pp = await conn.profilePictureUrl(who, 'image').catch(() => './default-profile.jpg');
+        let { premium, level, genre, birth, description, estrellas, exp, registered, age, role } = global.db.data.users[who] || {};
+        let username = conn.getName(who);
 
-    // Si no está registrado, registrar y enviar mensaje al canal
-    if (!registered) {
-        global.db.data.users[who] = {
-            ...global.db.data.users[who],
-            registered: true,
-            regTime: Date.now()
-        };
-        await sendRegistrationMessage(conn, who);
-    }
+        genre = genre || 'No especificado';
+        age = registered ? (age || 'Desconocido') : 'Sin especificar';
+        birth = birth || 'No Establecido';
+        description = description || 'Sin Descripción';
+        role = role || 'Aldeano';
 
-    let noprem = `
-╭───【 🛰️ *PROFILO DI UTENTE* 🛰️ 】───╮
-⚡ *Nome:* ${username}
-💡 *Età:* ${age}
-🌍 *Genere:* ${genre}
-🎂 *Compleanno:* ${birth}
-💍 *Stato:* ${isMarried ? partnerName : 'Nessuno'}
-💬 *Descrizione:* ${description}
-🌐 *Paese:* ${userNationality}
-🔒 *Registrato:* ${registered ? '✅' : '❌'}
+        let isMarried = who in global.db.data.marriages;
+        let partner = isMarried ? global.db.data.marriages[who] : null;
+        let partnerName = partner ? conn.getName(partner) : 'Nadie';
 
-💎 **RISORSE** 💎
-💰 *Stelle:* ${estrellas || 0}
-💥 *Esperienza:* ${exp || 0}
-⚙️ *Ruolo:* ${role}
+        // Datos de nacionalidad
+        let userNationality = 'Desconocido';
+        try {
+            let api = await fetch(`https://deliriussapi-oficial.vercel.app/tools/country?text=${PhoneNumber('+' + who.replace('@s.whatsapp.net', '')).getNumber('international')}`);
+            let response = await api.json();
+            if (response.result) {
+                userNationality = `${response.result.name} ${response.result.emoji}`;
+            }
+        } catch (error) {
+            console.error('Error al obtener nacionalidad:', error);
+        }
+
+        // Registrar si no está registrado
+        if (!registered) {
+            global.db.data.users[who] = {
+                ...global.db.data.users[who],
+                registered: true,
+                regTime: Date.now()
+            };
+            console.log(`Usuario ${username} registrado con éxito.`);
+            await sendRegistrationMessage(conn, who);
+        }
+
+        let message = `
+╭───【 🛰️ *Perfil de Usuario* 🛰️ 】───╮
+⚡ *Nombre:* ${username}
+💡 *Edad:* ${age}
+🌍 *Género:* ${genre}
+🎂 *Cumpleaños:* ${birth}
+💍 *Estado:* ${isMarried ? partnerName : 'Ninguno'}
+💬 *Descripción:* ${description}
+🌐 *País:* ${userNationality}
+🔒 *Registrado:* ✅
+
+💎 **Recursos** 💎
+💰 *Estrellas:* ${estrellas || 0}
+💥 *Experiencia:* ${exp || 0}
+⚙️ *Rol:* ${role}
 🔮 *Premium:* ${premium ? '✅' : '❌'}
 ╰────────────────────────────╯`.trim();
 
-    let prem = `
-╭───【 🌌 *UTENTE PREMIUM* 🌌 】───╮
-⚡ *Nome utente:* ${username}
-💡 *Età:* ${age}
-🌍 *Genere:* ${genre}
-🎂 *Compleanno:* ${birth}
-💍 *Stato:* ${isMarried ? partnerName : 'Nessuno'}
-💬 *Descrizione:* ${description}
-🌐 *Paese:* ${userNationality}
-🔒 *Registrato:* ${registered ? '✅' : '❌'}
-
-💎 **RISORSE ESCLUSIVE** 💎
-💰 *Stelle:* ${estrellas || 0}
-💥 *Esperienza:* ${exp || 0}
-⚙️ *Ruolo:* ${role}
-🔮 *Premium:* ${premium ? '✅' : '❌'}
-╰────────────────────────────╯
-🚀 *Utente Eccezionale del Futuro* 🚀`.trim();
-
-    conn.sendFile(m.chat, pp, 'perfil.jpg', `${premium ? prem.trim() : noprem.trim()}`, m, { mentions: [who] });
+        conn.sendFile(m.chat, pp, 'perfil.jpg', message, m, { mentions: [who] });
+    } catch (error) {
+        console.error('Error en el handler de perfil:', error);
+    }
 };
 
 handler.help = ['profile'];
@@ -116,4 +103,4 @@ handler.group = true;
 handler.tags = ['rg'];
 handler.command = ['profile', 'perfil'];
 
-export default handler;
+export default handler
