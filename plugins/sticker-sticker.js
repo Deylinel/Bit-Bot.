@@ -4,41 +4,20 @@
 // import { webp2png } from '../lib/webp2mp4.js';
 
 let handler = async (m, { conn, args }) => {
-  let stiker = false;
-
   try {
     const q = m.quoted ? m.quoted : m;
     const mime = (q.msg || q).mimetype || q.mediaType || '';
     const isMedia = /webp|image|video/.test(mime);
 
-    if (isMedia || (args[0] && isUrl(args[0]))) {
-      const input = isMedia ? await q.download?.() : args[0];
-
-      if (!input) {
-        return conn.reply(
-          m.chat,
-          "Error: No se detectó un archivo multimedia válido. Envía una imagen, video o gif antes de usar este comando.",
-          m
-        );
-      }
-
-      // Procesar archivo
-      stiker = await processMedia(input, mime);
-    } else {
-      return conn.reply(
-        m.chat,
-        "Error: Proporcione un archivo multimedia válido o una URL correcta.",
-        m
+    const input = isMedia ? await q.download?.() : args[0];
+    if (!input) {
+      throw new Error(
+        "No se detectó un archivo multimedia válido. Envía una imagen, video o gif antes de usar este comando."
       );
     }
-  } catch (e) {
-    console.error("Error general:", e);
-    conn.reply(
-      m.chat,
-      "Ocurrió un error al generar el sticker. Intenta nuevamente.",
-      m
-    );
-  } finally {
+
+    // Procesar archivo y generar sticker
+    const stiker = await processMedia(input, mime);
     if (stiker) {
       conn.sendFile(
         m.chat,
@@ -64,12 +43,11 @@ let handler = async (m, { conn, args }) => {
         { quoted: m }
       );
     } else {
-      conn.reply(
-        m.chat,
-        "Error: No se pudo completar la conversión. Verifica el archivo o URL y vuelve a intentarlo.",
-        m
-      );
+      throw new Error("No se pudo completar la conversión. Verifica el archivo o URL y vuelve a intentarlo.");
     }
+  } catch (e) {
+    console.error("Error:", e);
+    conn.reply(m.chat, e.message || "Ocurrió un error al generar el sticker. Intenta nuevamente.", m);
   }
 };
 
