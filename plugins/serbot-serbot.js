@@ -15,7 +15,7 @@ let handler = async (m, { conn, args, usedPrefix, command, isOwner, isPrems}) =>
 let parentw = args[0] && args[0] == "plz" ? conn : await global.conn
 
 if (!(args[0] && args[0] == 'plz' || (await global.conn).user.jid == conn.user.jid)) {
-return m.reply("Este comando solo puede ser usado en el bot principal! wa.me/" + global.conn.user.jid.split`@`[0x0] + "?text=" + usedPrefix + "serbot")
+return m.reply("⚙️ *Este comando sólo puede ser usado en el bot principal.*\n\n🌐 Enlace: wa.me/" + global.conn.user.jid.split`@`[0x0] + "?text=" + usedPrefix + "serbot")
 }
 
 async function serbot() {
@@ -37,7 +37,7 @@ async function serbot() {
       printQRInTerminal: true,
       logger: pino({ level: "fatal" }),
       auth: state,
-      browser: [`【 ✯ Ai Hoshino - MD ✰ 】`, "IOS", "4.1.0"],
+      browser: [`【 ✦ Ai Hoshino - MD ✦ 】`, "iOS", "4.1.0"],
     };
 
     let conn = makeWASocket(connectionOptions)
@@ -50,13 +50,13 @@ async function serbot() {
         conn.isInit = true
       }
       if (qr) {
-        let txt = '`–  S E R B O T  -  S U B B O T`\n\n'
-            txt += `┌  ✩  *Escanea este QR para ser en un Sub Bot*\n`
-            txt += `│  ✩  Pasos para escanear\n`
-            txt += `│  ✩  *1* : Haga click en los 3 puntos\n`
-            txt += `│  ✩  *2* : Toque dispositivos vinculados\n`
-            txt += `└  ✩  *3* : Escanea este QR\n\n`
-            txt += `> *Nota:* Este código QR expira en 30 segundos.`
+        let txt = "⚡️ *S E R B O T - S U B B O T*\n\n"
+            txt += `📌 *Pasos para Escanear el QR:*\n`
+            txt += `1️⃣ Toque los tres puntos en WhatsApp\n`
+            txt += `2️⃣ Seleccione "Dispositivos vinculados"\n`
+            txt += `3️⃣ Escanee el código QR que aparece abajo\n\n`
+            txt += `⏳ *Nota:* Este código QR caduca en *30 segundos*.\n`
+
         let sendQR = await parentw.sendFile(m.chat, await qrcode.toDataURL(qr, { scale: 8 }), "qrcode.png", txt, m, null, rcanal)
 
        setTimeout(() => {
@@ -73,7 +73,7 @@ async function serbot() {
         delete global.conns[i]
         global.conns.splice(i, 1)
         if (code !== DisconnectReason.connectionClosed) {
-          await parentw.reply(conn.user.jid, "Conexión perdida...", m, rcanal)
+          await parentw.reply(conn.user.jid, "⚠️ *Conexión perdida. Intentando reconectar...*", m, rcanal)
         }
       }
       if (global.db.data == null) {
@@ -82,12 +82,12 @@ async function serbot() {
       if (connection == "open") {
         conn.isInit = true
         global.conns.push(conn)
-        await parentw.reply(m.chat, args[0] ? 'Conectado con exito' : 'Conectado exitosamente con WhatsApp\n\n*Nota:* Esto es temporal\nSi el Bot principal se reinicia o se desactiva, todos los sub bots tambien lo haran\n\nEl número del bot puede cambiar, guarda este enlace:\n*-* https://whatsapp.com/channel/0029VagOLYjJP217bgUkT00N', m, rcanal)
+        await parentw.reply(m.chat, args[0] ? '✅ *Conexión exitosa.*' : '🚀 *Conectado con éxito al WhatsApp.*\n\n⚙️ *Nota:* Esta conexión es temporal.\nSi el bot principal se reinicia o se desactiva, todos los sub-bots también lo harán.\n\n🔗 *Enlace importante:* https://whatsapp.com/channel/0029VagOLYjJP217bgUkT00N', m, rcanal)
         await sleep(5000)
         if (args[0]) {
           return
         }
-        await parentw.reply(conn.user.jid, "La siguiente vez que se conecte envía el siguiente mensaje para iniciar sesión sin escanear otro código *QR*", m, rcanal)
+        await parentw.reply(conn.user.jid, "📡 *Para reconectar sin escanear otro QR, envíe este mensaje al sub-bot la próxima vez.*", m, rcanal)
         await parentw.reply(conn.user.jid, usedPrefix + command + " " + Buffer.from(fs.readFileSync(`${folderSub}/creds.json`), 'utf-8').toString('base64'), m, rcanal)
       }
     }
@@ -154,4 +154,4 @@ export default handler
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
-} 
+}
