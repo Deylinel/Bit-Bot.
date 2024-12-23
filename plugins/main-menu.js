@@ -227,31 +227,38 @@ function clockString(ms) {
 
 var ase = new Date();
 var hour = ase.getHours();
+let greetings = [
+  'Hope you have a productive day ahead 🌞', 
+  'Wishing you a smooth and positive day 🌤', 
+  'Let’s make this a fun-filled day! 🎉',
+  'Enjoy a peaceful evening 🌆',
+  'Embrace a tranquil night 🌙'
+];
 switch(hour){
-  case 0: hour = 'a quiet night 🌙'; break;
-  case 1: hour = 'a peaceful night 💤'; break;
-  case 2: hour = 'a calm night 🦉'; break;
-  case 3: hour = 'a bright morning ✨'; break;
-  case 4: hour = 'a fresh morning 💫'; break;
-  case 5: hour = 'a crisp morning 🌅'; break;
-  case 6: hour = 'a cool morning 🌄'; break;
-  case 7: hour = 'a bright morning 🌅'; break;
-  case 8: hour = 'a new morning 💫'; break;
-  case 9: hour = 'a crisp morning ✨'; break;
-  case 10: hour = 'a productive day 🌞'; break;
-  case 11: hour = 'a dynamic day 🌨'; break;
-  case 12: hour = 'a bright day ❄'; break;
-  case 13: hour = 'a clear day 🌤'; break;
-  case 14: hour = 'a smooth afternoon 🌇'; break;
-  case 15: hour = 'a quiet afternoon 🥀'; break;
-  case 16: hour = 'a peaceful afternoon 🌹'; break;
-  case 17: hour = 'a productive evening 🌆'; break;
-  case 18: hour = 'a serene night 🌙'; break;
-  case 19: hour = 'a cool night 🌃'; break;
-  case 20: hour = 'a digital night 🌌'; break;
-  case 21: hour = 'a tech-filled night 🌃'; break;
-  case 22: hour = 'a calm night 🌙'; break;
-  case 23: hour = 'a peaceful night 🌃'; break;
+  case 0: hour = greetings[4]; break;
+  case 1: hour = greetings[4]; break;
+  case 2: hour = greetings[4]; break;
+  case 3: hour = greetings[0]; break;
+  case 4: hour = greetings[0]; break;
+  case 5: hour = greetings[0]; break;
+  case 6: hour = greetings[0]; break;
+  case 7: hour = greetings[1]; break;
+  case 8: hour = greetings[1]; break;
+  case 9: hour = greetings[1]; break;
+  case 10: hour = greetings[2]; break;
+  case 11: hour = greetings[2]; break;
+  case 12: hour = greetings[2]; break;
+  case 13: hour = greetings[3]; break;
+  case 14: hour = greetings[3]; break;
+  case 15: hour = greetings[3]; break;
+  case 16: hour = greetings[3]; break;
+  case 17: hour = greetings[3]; break;
+  case 18: hour = greetings[3]; break;
+  case 19: hour = greetings[4]; break;
+  case 20: hour = greetings[4]; break;
+  case 21: hour = greetings[4]; break;
+  case 22: hour = greetings[4]; break;
+  case 23: hour = greetings[4]; break;
 }
 
-var greeting = "hope you have " + hour;
+var greeting = hour;
