@@ -10,7 +10,7 @@ let handler = async (m, { conn }) => {
 
   await m.react('🕒')
   if (!mime.startsWith('image/')) {
-    return m.reply('Responde a una *Imagen.*')
+    return m.reply('Por favor, responde a una *Imagen* para procesarla.')
   }
 
   let media = await q.download()
@@ -25,22 +25,23 @@ let handler = async (m, { conn }) => {
 
   await m.react('✅')
   if (api.data.data) {
-    let txt = '`I B B  -  U P L O A D E R`\n\n'
-        txt += `*❄️ TÍTULO* : ${q.filename || 'x'}\n`
-        txt += `*❄️ ID* : ${api.data.data.id}\n`
-        txt += `*❄️ ENLACE* : ${api.data.data.url}\n`
-        txt += `*❄️ DIRECTO* : ${api.data.data.url_viewer}\n`
-        txt += `*❄️ MIME* : ${mime}\n`
-        txt += `*❄️ FILE* : ${q.filename || 'x.jpg'}\n`
-        txt += `*❄️ EXTENSION* : ${api.data.data.image.extension}\n`
-        txt += `*❄️ DELETE* : ${api.data.data.delete_url}\n\n`
-        txt += `*➤ By: ${botname}*`
+    let txt = '`🔧 IBB - Image Uploader API`\n\n'
+        txt += `*💻 TÍTULO* : ${q.filename || 'Desconocido'}\n`
+        txt += `*🔑 ID* : ${api.data.data.id}\n`
+        txt += `*🌐 ENLACE* : ${api.data.data.url}\n`
+        txt += `*🔗 ENLACE DIRECTO* : ${api.data.data.url_viewer}\n`
+        txt += `*🖥️ MIME* : ${mime}\n`
+        txt += `*📂 NOMBRE DE ARCHIVO* : ${q.filename || 'imagen.jpg'}\n`
+        txt += `*🖱️ EXTENSIÓN* : ${api.data.data.image.extension}\n`
+        txt += `*🗑️ ELIMINAR* : ${api.data.data.delete_url}\n\n`
+        txt += `*🔗 Desarrollado por: ${botname} - Soluciones Digitales*`
     await conn.sendFile(m.chat, api.data.data.url, 'ibb.jpg', txt, m, null, fake)
   } else {
-    await m.react('✅')
+    await m.react('❌')
   }
 }
-handler.tags = ['convertir']
+
+handler.tags = ['tecnología']
 handler.help = ['toibb']
 handler.command = /^(tourl|toibb)$/i
 handler.register = true 
