@@ -1,21 +1,22 @@
-import {googleImage} from '@bochilteam/scraper';
+// Código Creado Por Niño Piña Wa.me/50557865603
+
+import fetch from 'node-fetch';
 const handler = async (m, {conn, text, usedPrefix, command}) => {
-if (!text) return conn.reply(m.chat, `*💛 Uso Correcto: ${usedPrefix + command} Nakano Nino*`, m, rcanal);
-conn.reply(m.chat, '💛 *Descargando su imagen...*', m, {
-contextInfo: { externalAdReply :{ mediaUrl: null, mediaType: 1, showAdAttribution: true,
-title: packname,
-body: textbot,
-previewType: 0, thumbnail: icons,
-sourceUrl: canal }}})
-const res = await googleImage(text);
-const image = await res.getRandom();
-const link = image;
-const messages = [['Imagen 1', textbot, await res.getRandom(),
-[[]], [[]], [[]], [[]]], ['Imagen 2', textbot, await res.getRandom(), [[]], [[]], [[]], [[]]], ['Imagen 2', textbot, await res.getRandom(), [[]], [[]], [[]], [[]]], ['Imagen 4', textbot, await res.getRandom(), [[]], [[]], [[]], [[]]]]
-await conn.sendCarousel(m.chat, `💛 Resultado de ${text}`, '🔎 Imagen - Descargas', null, messages, m);
-};
-handler.help = ['imagen <query>'];
-handler.tags = ['search', 'tools', 'downloader'];
-handler.command = ['image', 'imagen'];
-handler.register = true;
+if (!text) throw `*👻 ingrese un texto para generar poder generar su imagen*`;
+m.react('🕒');
+await conn.sendMessage(m.chat, {text: '*👻 Generando Imagen*'}, {quoted: m});
+try {
+const response = await fetch(`https://eliasar-yt-api.vercel.app/api/canvas/logo?texto=${encodeURIComponent(text)}&url=${encodeURIComponent(profilePicture)}`);
+if (!response.ok) throw new Error('Network response was not ok');
+const buffer = await response.buffer();
+m.react('✔️');
+await conn.sendMessage(m.chat, {image: buffer}, {quoted: m});
+} catch (error) {
+console.error(error);
+throw `*🚨 Lo Sentimos, ha ocurrido un error 😔*`;
+}
+}
+handler.tags = ['tools'];
+handler.help = ['genearimg <nombre> <link de la imagen>'];
+handler.command = ['genearimg','imgg'];
 export default handler;
