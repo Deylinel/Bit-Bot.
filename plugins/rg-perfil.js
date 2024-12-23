@@ -18,6 +18,7 @@ const sendRegistrationMessage = async (conn, who) => {
 
     try {
         await conn.sendMessage(channelJid, { text: message });
+        console.log(`Mensaje enviado exitosamente al canal: ${channelJid}`);
     } catch (error) {
         console.error('Error al enviar el mensaje al canal:', error);
     }
@@ -33,7 +34,7 @@ var handler = async (m, { conn }) => {
         who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender;
     }
 
-    let pp = await conn.profilePictureUrl(who, 'image').catch(_ => imagen1);
+    let pp = await conn.profilePictureUrl(who, 'image').catch(_ => './default-profile.jpg'); // Imagen predeterminada si no existe
     let { premium, level, genre, birth, description, estrellas, exp, lastclaim, registered, regTime, age, role } = global.db.data.users[who] || {};
     let username = conn.getName(who);
 
@@ -46,13 +47,26 @@ var handler = async (m, { conn }) => {
     let isMarried = who in global.db.data.marriages;
     let partner = isMarried ? global.db.data.marriages[who] : null;
     let partnerName = partner ? conn.getName(partner) : 'Nadie';
-    let api = await axios.get(`https://deliriussapi-oficial.vercel.app/tools/country?text=${PhoneNumber('+' + who.replace('@s.whatsapp.net', '')).getNumber('international')}`);
-    let userNationalityData = api.data.result;
+
+    // Obtener datos de nacionalidad usando el API
+    let userNationalityData;
+    try {
+        let api = await fetch(`https://deliriussapi-oficial.vercel.app/tools/country?text=${PhoneNumber('+' + who.replace('@s.whatsapp.net', '')).getNumber('international')}`);
+        let response = await api.json();
+        userNationalityData = response.result;
+    } catch (error) {
+        console.error('Error al obtener datos de nacionalidad:', error);
+        userNationalityData = null;
+    }
     let userNationality = userNationalityData ? `${userNationalityData.name} ${userNationalityData.emoji}` : 'Desconocido';
 
+    // Si no está registrado, registrar y enviar mensaje al canal
     if (!registered) {
-        global.db.data.users[who].registered = true;
-        global.db.data.users[who].regTime = Date.now();
+        global.db.data.users[who] = {
+            ...global.db.data.users[who],
+            registered: true,
+            regTime: Date.now()
+        };
         await sendRegistrationMessage(conn, who);
     }
 
