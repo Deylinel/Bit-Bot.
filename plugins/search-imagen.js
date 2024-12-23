@@ -27,7 +27,7 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
 };
 
 handler.tags = ['tools'];
-handler.help = ['genearimg <texto>'];
-handler.command = ['genearimg', 'imgg'];
+handler.help = ['.imagen <texto>'];
+handler.command = ['.imagen']; // Comando que activa este handler
 
-export default handler; 
+export default handler;
