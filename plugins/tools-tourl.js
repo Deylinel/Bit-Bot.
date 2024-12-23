@@ -20,7 +20,7 @@ let handler = async (m, { conn }) => {
 
   await m.react('✅')
   if (api.data.data) {
-    let txt = `🔧 *IBB - Image Uploader*\n\n`
+    let txt = `🔧 *𝐁𝐈𝐓 - 𝐁𝐎𝐓 𝐆𝐄𝐍𝐄𝐑𝐀𝐃𝐎𝐑*\n\n`
         txt += `*💾 ID* : ${api.data.data.id}\n`
         txt += `*🌍 ENLACE* : ${api.data.data.url}\n`
         txt += `*🔗 DIRECTO* : ${api.data.data.url_viewer}\n`
