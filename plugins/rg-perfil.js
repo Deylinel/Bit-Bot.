@@ -1,6 +1,7 @@
 import PhoneNumber from 'awesome-phonenumber';
 import fetch from 'node-fetch';
 import fs from 'fs';
+import Jimp from 'jimp'; // Biblioteca para manipulación de imágenes
 
 const loadMarriages = () => {
     if (fs.existsSync('./storage/databases/marry.json')) {
@@ -11,14 +12,33 @@ const loadMarriages = () => {
     }
 };
 
-const sendRegistrationMessage = async (conn, who) => {
+const createProfileImage = async (profileUrl, botName) => {
+    try {
+        const profileImage = await Jimp.read(profileUrl); // Leer imagen de perfil
+        const font = await Jimp.loadFont(Jimp.FONT_SANS_32_WHITE); // Cargar fuente para la marca de agua
+
+        // Agregar la marca de agua
+        profileImage.print(font, 10, profileImage.getHeight() - 40, botName, profileImage.getWidth());
+        const outputPath = './temp/profile-with-watermark.jpg';
+        await profileImage.writeAsync(outputPath); // Guardar la imagen editada
+        return outputPath;
+    } catch (error) {
+        console.error('Error al crear la imagen de perfil:', error);
+        return './default-profile.jpg'; // Ruta a una imagen predeterminada en caso de error
+    }
+};
+
+const sendRegistrationMessage = async (conn, who, profilePath) => {
     const channelJid = '0029VawF8fBBvvsktcInIz3m@broadcast'; // Ajuste del JID del canal
     const username = conn.getName(who);
     const message = `🎉 *Nuevo Registro* 🎉\n\nEl usuario *${username}* se ha registrado exitosamente. ¡Bienvenido/a al sistema!`;
 
     try {
         console.log(`Enviando mensaje al canal: ${channelJid}`);
-        await conn.sendMessage(channelJid, { text: message });
+        await conn.sendMessage(channelJid, {
+            image: { url: profilePath },
+            caption: message,
+        });
         console.log(`Mensaje enviado exitosamente al canal: ${channelJid}`);
     } catch (error) {
         console.error('Error al enviar el mensaje al canal:', error);
@@ -70,7 +90,10 @@ var handler = async (m, { conn }) => {
                 regTime: Date.now()
             };
             console.log(`Usuario ${username} registrado con éxito.`);
-            await sendRegistrationMessage(conn, who);
+
+            // Crear la imagen con marca de agua
+            const profilePath = await createProfileImage(pp, '𝐁𝐈𝐓 - 𝐁𝐎𝐓');
+            await sendRegistrationMessage(conn, who, profilePath);
         }
 
         let message = `
@@ -103,4 +126,4 @@ handler.group = true;
 handler.tags = ['rg'];
 handler.command = ['profile', 'perfil'];
 
-export default handler
+export default handler;
