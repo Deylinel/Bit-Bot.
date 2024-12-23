@@ -1,4 +1,4 @@
- import { sticker } from '../lib/sticker.js';
+import { sticker } from '../lib/sticker.js';
 // import uploadFile from '../lib/uploadFile.js';
 // import uploadImage from '../lib/uploadImage.js';
 // import { webp2png } from '../lib/webp2mp4.js';
@@ -9,17 +9,18 @@ let handler = async (m, { conn, args }) => {
     const mime = (q.msg || q).mimetype || q.mediaType || '';
     const isMedia = /webp|image|video/.test(mime);
 
+    // Descargar archivo multimedia o tomar URL
     const input = isMedia ? await q.download?.() : args[0];
     if (!input) {
       throw new Error(
-        "No se detectó un archivo multimedia válido. Envía una imagen, video o gif antes de usar este comando."
+        "⚠️ *No se detectó un archivo multimedia válido. Por favor, responde a una imagen, video o gif, o proporciona una URL válida para generar el sticker*."
       );
     }
 
     // Procesar archivo y generar sticker
     const stiker = await processMedia(input, mime);
     if (stiker) {
-      conn.sendFile(
+      await conn.sendFile(
         m.chat,
         stiker,
         'sticker.webp',
@@ -32,29 +33,35 @@ let handler = async (m, { conn, args }) => {
             isForwarded: false,
             externalAdReply: {
               showAdAttribution: false,
-              title: global.packsticker || 'Sticker generado',
-              body: "Generado por un sistema automatizado avanzado.",
+              title: global.packsticker || '*Sticker creado con éxito* 🎨',
+              body: "Generado por un sistema avanzado de automatización.",
               mediaType: 2,
               sourceUrl: global.redes || '',
-              thumbnail: global.icons || null
-            }
-          }
+              thumbnail: global.icons || null,
+            },
+          },
         },
         { quoted: m }
       );
     } else {
-      throw new Error("No se pudo completar la conversión. Verifica el archivo o URL y vuelve a intentarlo.");
+      throw new Error(
+        "⚠️ *No se pudo completar la conversión. Verifica el archivo o URL y vuelve a intentarlo*."
+      );
     }
   } catch (e) {
-    console.error("Error:", e);
-    conn.reply(m.chat, e.message || "Ocurrió un error al generar el sticker. Intenta nuevamente.", m);
+    console.error("Error en el handler:", e);
+    await conn.reply(
+      m.chat,
+      e.message || "❌ *Ocurrió un error al generar el sticker. Intenta nuevamente*.",
+      m
+    );
   }
 };
 
-// Función modular para procesar medios
+// Función para procesar medios y generar sticker
 const processMedia = async (input, mime) => {
   try {
-    // Intentar la conversión inicial
+    // Primera tentativa: conversión directa
     return await sticker(
       input,
       false,
@@ -64,34 +71,34 @@ const processMedia = async (input, mime) => {
   } catch (e) {
     console.error("Error en la conversión inicial:", e);
 
-    // Fallback: Subir archivo y convertir
-    let out;
+    // Intentar método alternativo de subida y conversión
+    let uploadedUrl;
     if (/webp/.test(mime)) {
-      out = await webp2png(input);
+      uploadedUrl = await webp2png(input);
     } else if (/image/.test(mime)) {
-      out = await uploadImage(input);
+      uploadedUrl = await uploadImage(input);
     } else if (/video/.test(mime)) {
-      out = await uploadFile(input);
+      uploadedUrl = await uploadFile(input);
     } else {
-      throw new Error("Tipo de archivo no soportado.");
+      throw new Error("⚠️ *Tipo de archivo no soportado*.");
     }
 
-    if (typeof out !== 'string') {
-      throw new Error("Error al procesar el archivo multimedia.");
+    if (typeof uploadedUrl !== 'string') {
+      throw new Error("⚠️ *Error al procesar el archivo multimedia*");
     }
 
     return await sticker(
       false,
-      out,
+      uploadedUrl,
       global.packsticker || 'Sticker',
       global.author || 'Bot'
     );
   }
 };
 
-// Función para validar URLs
+// Validador de URLs
 const isUrl = (text) => {
-  return /^https?:\/\/[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)$/i.test(text);
+  return /^https?:\/\/[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}\/?.*$/i.test(text);
 };
 
 handler.help = ['sticker <imagen>', 'sticker <url>'];
