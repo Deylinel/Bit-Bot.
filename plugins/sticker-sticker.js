@@ -21,7 +21,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
       if (!img) {
         return conn.reply(
           m.chat,
-          "Error: No se detectó un archivo multimedia válido. Envía una imagen, video o gif antes de usar este comando.",
+          "> *Error: No se detectó un archivo multimedia válido. Envía una imagen, video o gif antes de usar este comando*.",
           m
         );
       }
@@ -70,7 +70,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
             externalAdReply: {
               showAdAttribution: false,
               title: global.packsticker || 'Sticker generado',
-              body: "Generado por un sistema automatizado avanzado.",
+              body: "BIT - BOT.",
               mediaType: 2,
               sourceUrl: global.redes || '',
               thumbnail: global.icons || null
@@ -82,7 +82,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
     } else {
       conn.reply(
         m.chat,
-        "Error: La conversión no pudo completarse. Verifica el archivo o URL e intenta nuevamente.",
+        "*⚠️Error⚠️: *La conversión no pudo completarse. nose encontró ningún archivo* 📂 .",
         m
       );
     }
