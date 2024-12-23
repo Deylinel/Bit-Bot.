@@ -1,33 +1,22 @@
-import fetch from 'node-fetch';
-
-const handler = async (m, { conn, text, usedPrefix, command }) => {
-  if (!text) throw `*👻 Ingrese un texto para generar la imagen*`;
-
-  m.react('🕒');
-  await conn.sendMessage(m.chat, { text: '*👻 Generando Imagen...*' }, { quoted: m });
-
-  try {
-    // Solicitar la generación de la imagen a la API
-    const response = await fetch(`https://eliasar-yt-api.vercel.app/api/canvas/logo?texto=${encodeURIComponent(text)}`);
-    if (!response.ok) throw new Error('Error en la respuesta de la API al intentar generar la imagen');
-
-    const buffer = await response.buffer();
-
-    // Enviar la imagen con el texto debajo
-    await conn.sendMessage(m.chat, {
-      image: buffer,
-      caption: `BIT - BOT > IMÁGEN`
-    }, { quoted: m });
-
-    m.react('✔️');
-  } catch (error) {
-    console.error('Error al generar la imagen:', error);
-    throw `*🚨 Lo sentimos, ocurrió un error al generar la imagen. Verifique el texto ingresado e intente nuevamente.*`;
-  }
+import {googleImage} from '@bochilteam/scraper';
+const handler = async (m, {conn, text, usedPrefix, command}) => {
+if (!text) throw `*🌹 Uso Correcto: ${usedPrefix + command} Yuki Suou*`;
+conn.reply(m.chat, '🌸 *Descargando su imagen...*', m, {
+contextInfo: { externalAdReply :{ mediaUrl: null, mediaType: 1, showAdAttribution: true,
+title: packname,
+body: wm,
+previewType: 0, thumbnail: icons,
+sourceUrl: channel }}})
+const res = await googleImage(text);
+const image = await res.getRandom();
+const link = image;
+const messages = [['Imagen 1', dev, await res.getRandom(),
+[[]], [[]], [[]], [[]]], ['Imagen 2', dev, await res.getRandom(), [[]], [[]], [[]], [[]]], ['Imagen 2', dev, await res.getRandom(), [[]], [[]], [[]], [[]]], ['Imagen 4', dev, await res.getRandom(), [[]], [[]], [[]], [[]]]]
+await conn.sendCarousel(m.chat, `🌷 Resultado de ${text}`, '🔎 Imagen - Descargas', null, messages, m);
 };
-
-handler.tags = ['tools'];
-handler.help = ['.imagen <texto>'];
-handler.command = ['.imagen']; // Comando que activa este handler
-
+handler.help = ['imagen <query>'];
+handler.tags = ['buscador','descargas'];
+handler.command = ['image','imagen', 'wimage'];
+handler.group = true;
+handler.register = true
 export default handler;
