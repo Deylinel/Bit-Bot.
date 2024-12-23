@@ -25,7 +25,7 @@ let handler = async function (m, { conn, text, usedPrefix, command }) {
   let sn = createHash('md5').update(m.sender).digest('hex')
   let img = await (await fetch(`https://i.ibb.co/Lg4nv9H/file.jpg`)).buffer()
 
-  let txt = `–  *REGISTRO DE DATOS - BOT PROTOCOL*\n\n`
+  let txt = `–  *REGISTRO DE BIT - BOT PROTOCOL*\n\n`
       txt += `┌  💻  *NOMBRE* : ${name}\n`
       txt += `│  💻  *EDAD* : ${age} ciclos\n`
       txt += `│  💻  *CÓDIGO DE IDENTIFICACIÓN*\n`
