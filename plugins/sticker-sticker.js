@@ -1,7 +1,7 @@
- import { sticker } from '../lib/sticker.js'
-// import uploadFile from '../lib/uploadFile.js'
-// import uploadImage from '../lib/uploadImage.js'
-// import { webp2png } from '../lib/webp2mp4.js'
+ import { sticker } from '../lib/sticker.js';
+// import uploadFile from '../lib/uploadFile.js';
+// import uploadImage from '../lib/uploadImage.js';
+// import { webp2png } from '../lib/webp2mp4.js';
 
 let handler = async (m, { conn, args, usedPrefix, command }) => {
   let stiker = false;
@@ -12,14 +12,16 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
 
     if (/webp|image|video/g.test(mime)) {
       if (/video/g.test(mime) && (q.msg || q).seconds > 8) {
-        return m.reply(`⚙️ *¡El video no puede durar más de 8 segundos!*`);
+        return m.reply(
+          "Error: Los videos no pueden exceder los 8 segundos de duración."
+        );
       }
 
       let img = await q.download?.();
       if (!img) {
         return conn.reply(
           m.chat,
-          `🚀 *_Oops! La conversión no pudo completarse. Por favor, envía primero una imagen, video o gif, y luego utiliza el comando nuevamente._*`,
+          "Error: No se detectó un archivo multimedia válido. Envía una imagen, video o gif antes de usar este comando.",
           m
         );
       }
@@ -28,7 +30,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
       try {
         stiker = await sticker(img, false, global.packsticker, global.author);
       } catch (e) {
-        console.error(e);
+        console.error("Error en la conversión inicial:", e);
         if (/webp/g.test(mime)) {
           out = await webp2png(img);
         } else if (/image/g.test(mime)) {
@@ -47,11 +49,11 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
       if (isUrl(args[0])) {
         stiker = await sticker(false, args[0], global.packsticker, global.author);
       } else {
-        return m.reply(`⚙️ El URL es incorrecto.`);
+        return m.reply("Error: La URL proporcionada no es válida.");
       }
     }
   } catch (e) {
-    console.error(e);
+    console.error("Error general:", e);
   } finally {
     if (stiker) {
       conn.sendFile(
@@ -67,8 +69,8 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
             isForwarded: false,
             externalAdReply: {
               showAdAttribution: false,
-              title: global.packsticker || 'Sticker',
-              body: `⏤͟͞ू⃪ ፝͜⁞𝐁𝐢𝐭-𝐁𝐨𝐭✰⃔࿐`,
+              title: global.packsticker || 'Sticker generado',
+              body: "Generado por un sistema automatizado avanzado.",
               mediaType: 2,
               sourceUrl: global.redes || '',
               thumbnail: global.icons || null
@@ -80,14 +82,14 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
     } else {
       conn.reply(
         m.chat,
-        '🌐 *_Oops! La conversión no pudo completarse. Por favor, envía primero una imagen, video o gif, y luego utiliza el comando nuevamente._*',
+        "Error: La conversión no pudo completarse. Verifica el archivo o URL e intenta nuevamente.",
         m
       );
     }
   }
 };
 
-handler.help = ['stiker <img>', 'sticker <url>'];
+handler.help = ['sticker <imagen>', 'sticker <url>'];
 handler.tags = ['sticker'];
 handler.group = false;
 handler.register = true;
