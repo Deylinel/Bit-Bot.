@@ -1,4 +1,3 @@
-
 import PhoneNumber from 'awesome-phonenumber';
 import fetch from 'node-fetch';
 import fs from 'fs';
@@ -9,6 +8,18 @@ const loadMarriages = () => {
         global.db.data.marriages = data;
     } else {
         global.db.data.marriages = {};
+    }
+};
+
+const sendRegistrationMessage = async (conn, who) => {
+    const channelJid = '0029VawF8fBBvvsktcInIz3m@g.us'; // JID del canal
+    const username = conn.getName(who);
+    const message = `🎉 *Nuevo Registro* 🎉\n\nEl usuario *${username}* se ha registrado exitosamente. ¡Bienvenido/a al sistema!`;
+
+    try {
+        await conn.sendMessage(channelJid, { text: message });
+    } catch (error) {
+        console.error('Error al enviar el mensaje al canal:', error);
     }
 };
 
@@ -38,6 +49,12 @@ var handler = async (m, { conn }) => {
     let api = await axios.get(`https://deliriussapi-oficial.vercel.app/tools/country?text=${PhoneNumber('+' + who.replace('@s.whatsapp.net', '')).getNumber('international')}`);
     let userNationalityData = api.data.result;
     let userNationality = userNationalityData ? `${userNationalityData.name} ${userNationalityData.emoji}` : 'Desconocido';
+
+    if (!registered) {
+        global.db.data.users[who].registered = true;
+        global.db.data.users[who].regTime = Date.now();
+        await sendRegistrationMessage(conn, who);
+    }
 
     let noprem = `
 ╭───【 🛰️ *PROFILO DI UTENTE* 🛰️ 】───╮
@@ -85,4 +102,4 @@ handler.group = true;
 handler.tags = ['rg'];
 handler.command = ['profile', 'perfil'];
 
-export default handler; 
+export default handler;
