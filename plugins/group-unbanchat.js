@@ -1,22 +1,14 @@
-let handler = async (m, { conn, isAdmin, isROwner }) => {
-    if (!(isAdmin || isROwner)) return dfail('admin', m, conn)
-
-    // Activación del bot con diseño futurista
-    global.db.data.chats[m.chat].isBanned = false
-    const futuristaMsg = `
-⚡️🔊 **BIT-BOT ACTIVADO** 🔊⚡️
-
-🚀 *Estado:* ACTIVADO 🚀
-
-🔑 *Reactivar: Contactar admin* 🔑
-
-🛸 *¡Conectando de nuevo!* 🛸
-    `
-    await conn.reply(m.chat, futuristaMsg, m, rcanal)
-    await m.react('✅')
+let handler = async (m, { conn }) => {
+if (!(m.chat in global.db.data.chats)) return conn.reply(m.chat, '🔴 *¡ESTE CHAT NO ESTÁ REGISTRADO!*', m, fake)
+let chat = global.db.data.chats[m.chat]
+if (!chat.isBanned) return conn.reply(m.chat, '⭕ *¡BIT-BOT NO ESTÁ BANEADA EN ESTE CHAT!*', m, fake)
+chat.isBanned = false
+await conn.reply(m.chat, '✅ *¡BIT-BOT YA FUÉ DESBANEADA EN ESTE CHAT!*', m, fake)
 }
-handler.help = ['desbanearbot']
-handler.tags = ['group']
-handler.command = ['desbanearbot', 'unbanchat']
-handler.group = true 
+handler.help = ['unbanchat'];
+handler.tags = ['mods'];
+handler.command = ['unbanchat','desbanearchat','desbanchat']
+handler.rowner = true 
+//handler.group = true
+
 export default handler
