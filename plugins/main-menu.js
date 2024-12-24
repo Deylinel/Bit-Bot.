@@ -199,7 +199,7 @@ let handler = async (m, { conn, usedPrefix: _p, __dirname }) => {
     let pp13 = 'https://i.ibb.co/Cs6Tt9V/Sylph.jpg'
     let pp14 = 'https://i.ibb.co/JmcS3kv/Sylph.jpg'
     let pp15 = 'https://i.ibb.co/Cs6Tt9V/Sylph.jpg'
-    let img = 'https://i.ibb.co/h14z1FW/file.jpg'
+    let img = 'https://i.ibb.co/HBCC7KP/file.jpg'
     await m.react('⚙️')
     await conn.sendFile(m.chat, img, 'thumbnail.jpg', text.trim(), m, null, rcanal)
 
