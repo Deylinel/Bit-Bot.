@@ -15,7 +15,7 @@ let handler = async (m, { conn, args, usedPrefix, command, isOwner, isPrems}) =>
 let parentw = args[0] && args[0] == "plz" ? conn : await global.conn
 
 if (!(args[0] && args[0] == 'plz' || (await global.conn).user.jid == conn.user.jid)) {
-return m.reply("⚙️ *Este comando sólo puede ser usado en el bot principal.*\n\n🌐 Enlace: wa.me/" + global.conn.user.jid.split`@`[0x0] + "?text=" + usedPrefix + "serbot")
+return m.reply("⚙️ *[⚡ Sistema Principal: Conexión Requerida]*\n\n🌐 *Enlace de Conexión*: wa.me/" + global.conn.user.jid.split`@`[0x0] + "?text=" + usedPrefix + "serbot")
 }
 
 async function serbot() {
@@ -50,12 +50,11 @@ async function serbot() {
         conn.isInit = true
       }
       if (qr) {
-        let txt = "⚡️ *S E R B O T - S U B B O T*\n\n"
-            txt += `📌 *Pasos para Escanear el QR:*\n`
-            txt += `1️⃣ Toque los tres puntos en WhatsApp\n`
-            txt += `2️⃣ Seleccione "Dispositivos vinculados"\n`
-            txt += `3️⃣ Escanee el código QR que aparece abajo\n\n`
-            txt += `⏳ *Nota:* Este código QR caduca en *30 segundos*.\n`
+        let txt = "⚡️ *[⚡ QR - Sub-Bot Conexión]*\n\n"
+            txt += `📌 *Pasos para Vincular tu WhatsApp:*\n`
+            txt += `1️⃣ *Abrir*: Menú de WhatsApp > _Dispositivos Vinculados_\n`
+            txt += `2️⃣ *Escanear*: El código QR que se muestra abajo\n\n`
+            txt += `⏳ *Nota:* Este QR caduca en *30 segundos*. ¡Asegúrate de escanearlo a tiempo!\n`
 
         let sendQR = await parentw.sendFile(m.chat, await qrcode.toDataURL(qr, { scale: 8 }), "qrcode.png", txt, m, null, rcanal)
 
@@ -73,7 +72,7 @@ async function serbot() {
         delete global.conns[i]
         global.conns.splice(i, 1)
         if (code !== DisconnectReason.connectionClosed) {
-          await parentw.reply(conn.user.jid, "⚠️ *Conexión perdida. Intentando reconectar...*", m, rcanal)
+          await parentw.reply(conn.user.jid, "⚠️ *[⚠ Reconexión Automática]*\n\nIntentando restablecer conexión con el Sub-Bot...", m, rcanal)
         }
       }
       if (global.db.data == null) {
@@ -82,12 +81,12 @@ async function serbot() {
       if (connection == "open") {
         conn.isInit = true
         global.conns.push(conn)
-        await parentw.reply(m.chat, args[0] ? '✅ *Conexión exitosa.*' : '🚀 *Conectado con éxito al WhatsApp.*\n\n⚙️ *Nota:* Esta conexión es temporal.\nSi el bot principal se reinicia o se desactiva, todos los sub-bots también lo harán.\n\n🔗 *Enlace importante:* https://whatsapp.com/channel/0029VagOLYjJP217bgUkT00N', m, rcanal)
+        await parentw.reply(m.chat, args[0] ? '✅ *[✅ Conexión Exitosa]*' : '🚀 *[🚀 Sub-Bot Conectado Exitosamente]*\n\n⚙️ *Nota:* Esta conexión es temporal y depende del bot principal.\n🔗 *Recomendado:* Únete a nuestro canal para más soporte: https://whatsapp.com/channel/0029VagOLYjJP217bgUkT00N', m, rcanal)
         await sleep(5000)
         if (args[0]) {
           return
         }
-        await parentw.reply(conn.user.jid, "📡 *Para reconectar sin escanear otro QR, envíe este mensaje al sub-bot la próxima vez.*", m, rcanal)
+        await parentw.reply(conn.user.jid, "📡 *[📡 Reconexión Simplificada]*\n\nPara volver a conectar este Sub-Bot sin escanear otro QR, envíe el siguiente mensaje al Sub-Bot:", m, rcanal)
         await parentw.reply(conn.user.jid, usedPrefix + command + " " + Buffer.from(fs.readFileSync(`${folderSub}/creds.json`), 'utf-8').toString('base64'), m, rcanal)
       }
     }
