@@ -1,68 +1,89 @@
-import { watchFile, unwatchFile } from 'fs' 
-import chalk from 'chalk'
-import { fileURLToPath } from 'url'
-import fs from 'fs'
-import cheerio from 'cheerio'
-import fetch from 'node-fetch'
-import axios from 'axios'
+El problema con tu código es un error de 
+import { watchFile, unwatchFile } from 'fs';
+import chalk from 'chalk';
+import { fileURLToPath } from 'url';
+import fs from 'fs';
+import cheerio from 'cheerio';
+import fetch from 'node-fetch';
+import axios from 'axios';
 
-//*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
+//*═══════════✧════════════✧═══════════*
+//* ⚙️ TECNO - BOT System Configuration ⚙️ *
+//*═══════════✧════════════✧═══════════*
 
 global.owner = [
   ['50557865603', 'WillZek', true],
-  ['50498409019', 'CrowBot-Ai', true],
+  ['50498409019', 'CrowBot-AI', true],
   ['584241836217', 'Prak Harper', true],
-  ['50498409019', 'WillZek-Soporte', true]
-]
+  ['50488198573', 'DEYLIN-Support', true]
+]; // <-- Corchete de cierre y coma añadidos
 
-//*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
+//*═══════════✧════════════✧═══════════*
 
-global.mods = []
-global.prems = []
+global.mods = []; // Administradores del sistema
+global.prems = []; // Usuarios premium
 
-//*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
+//*═══════════✧════════════✧═══════════*
 
-global.packname = `⏤͟͟͞͞⋆⬪࣪ꥈ🎅★ ׄ ꒱ 𝑪𝒓𝒐𝒘𝑩𝒐𝒕 - 𝑺.𝑪.𝑨 ୭`
-global.author = '❄️𝐁𝐲 𝐖𝐢𝐥𝐥𝐙𝐞𝐤🎅'
-global.stickpack = '© CrowBot'
-global.stickauth = 'By WillZek'
-global.wait = '🚩 *Aɢᴜᴀʀᴅᴇ ᴜɴ ᴍᴏᴍᴇɴᴛᴏ, sᴏʏ ʟᴇɴᴛ𝙾... ฅ^•ﻌ•^ฅ*'
-global.botname = '❄️FELIZ NAVIDAD❄️'
-global.textbot = `🌲𝐂𝐫𝐨𝐰𝐁𝐨𝐭 𝐁𝐲 𝐖𝐢𝐥𝐥𝐙𝐞𝐤⛄`
-global.listo = '*Aqui tiene ฅ^•ﻌ•^ฅ*'
-global.namechannel = '𝐓𝐇𝐄 𝐂𝐑𝐎𝐖𝐁𝐎𝐓-𝐀𝐈 🌠'
+global.packname = `⟢⧫ TECNO BOT ⦾ System Core AI ⧫⟣`;
+global.author = '⚙️ TECNO BOT by DEYLIN ⚙️';
+global.stickpack = '© TECNO - BOT ⚡';
+global.stickauth = '🔧 Powered by DEYLIN ';
+global.wait = '⏳ *Procesando solicitud... conectando a la red.* ⏳';
+global.botname = '⟢🚀 TECNO BOT 🚀⟣';
+global.textbot = `🌐 *TECNO BOT - Desarrollado por DEYLIN* 🌐`;
+global.listo = '✔️ *¡Tarea completada con éxito!* 🚀';
+global.namechannel = '📡 *TECNO BOT Channel* 🌠';
 
-//*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
+//*═══════════✧════════════✧═══════════*
 
-global.catalogo = fs.readFileSync('./storage/img/catalogo.png')
-global.miniurl = fs.readFileSync('./storage/img/miniurl.jpg')
+global.catalogo = fs.readFileSync('./storage/img/catalogo.png');
+global.miniurl = fs.readFileSync('./storage/img/miniurl.jpg');
 
-//*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
+//*═══════════✧════════════✧═══════════*
 
-global.group = 'https://chat.whatsapp.com/IO3kjd9ovw1Dm8pVUE2MgN'
-global.canal = 'https://whatsapp.com/channel/0029VakfOZfHFxP7rNrUQk2d'
+TODAVÍA NO TENGO GRUPO 
 
-//*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
+global.canal = '📡 https://whatsapp.com/channel/0029VawF8fBBvvsktcInIz3m';
 
-global.estilo = { key: {  fromMe: false, participant: `0@s.whatsapp.net`, ...(false ? { remoteJid: "5219992095479-1625305606@g.us" } : {}) }, message: { orderMessage: { itemCount : -999999, status: 1, surface : 1, message: botname, orderTitle: 'Bang', thumbnail: catalogo, sellerJid: '0@s.whatsapp.net'}}}
+//*═══════════✧════════════✧═══════════*
 
-//*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
+global.estilo = {
+  key: { 
+    fromMe: false, 
+    participant: `0@s.whatsapp.net`, 
+    ...(false ? { remoteJid: "5219992095479-1625305606@g.us" } : {})
+  }, 
+  message: { 
+    orderMessage: { 
+      itemCount: -999999, 
+      status: 1, 
+      surface: 1, 
+      message: botname, 
+      orderTitle: '⚡ CrowBot System ⚡', 
+      thumbnail: catalogo, 
+      sellerJid: '0@s.whatsapp.net' 
+    }
+  }
+};
 
-global.cheerio = cheerio
-global.fs = fs
-global.fetch = fetch
-global.axios = axios
+//*═══════════✧════════════✧═══════════*
 
-//*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
+global.cheerio = cheerio;
+global.fs = fs;
+global.fetch = fetch;
+global.axios = axios;
 
-global.multiplier = 69 
-global.maxwarn = '2' // máxima advertencias
+//*═══════════✧════════════✧═══════════*
 
-//*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
+global.multiplier = 69; // Factor de experiencia
+global.maxwarn = '2'; // Advertencias máximas antes del bloqueo
 
-let file = fileURLToPath(import.meta.url)
+//*═══════════✧════════════✧═══════════*
+
+let file = fileURLToPath(import.meta.url);
 watchFile(file, () => {
-  unwatchFile(file)
-  console.log(chalk.redBright("Update 'config.js'"))
-  import(`${file}?update=${Date.now()}`)
-})
+  unwatchFile(file);
+  console.log(chalk.greenBright("♻️ Archivo 'config.js' actualizado automáticamente"));
+  import(`${file}?update=${Date.now()}`);
+});
