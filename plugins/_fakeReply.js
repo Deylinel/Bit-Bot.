@@ -6,9 +6,9 @@ let imagenes = ["https://qu.ax/GXtuE.jpg",
 "https://qu.ax/nZSJg.jpg",
 "https://qu.ax/gBatQ.jpg",
 "https://qu.ax/WXnku.jpg",
-"https://i.ibb.co/Zhxwn6g/file.jpg",
-"https://i.ibb.co/rcKPVdk/file.jpg",
-"https://i.ibb.co/m92DNQC/file.jpg"]
+"https://qu.ax/oogDv.jpg ",
+"https://qu.ax/RdSoo.jpg",
+"https://qu.ax/gKDcJ.jpg"]
 
 let icono = imagenes[Math.floor(Math.random() * imagenes.length)]
 
