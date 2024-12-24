@@ -261,4 +261,4 @@ switch(hour){
   case 23: hour = greetings[4]; break;
 }
 
-var greeting = hour;
+var greeting = hour; 
