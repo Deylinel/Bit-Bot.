@@ -21,60 +21,61 @@ let Styles = (text, style = 1) => {
   return output.join('');
 };
 let tags = {
-  'anime': '📡 ANIME 🌐',
-  'main': '🖥️ INFO 🖲️',
-  'search': '🔍 SEARCH 🧠',
-  'game': '🎮 GAME 👾',
-  'serbot': '🤖 SUB BOTS 🛠️',
-  'rpg': '🌐 RPG 🛡️',
-  'rg': '📜 REGISTRO 🖋️',
-  'sticker': '📂 STICKER 🖼️',
-  'img': '🖥️ IMAGE 🖱️',
-  'group': '👥 GROUPS 💬',
-  'nable': '🕹️ ON / OFF 🔌',
-  'premium': '💎 PREMIUM 🖱️',
-  'downloader': '📥 DOWNLOAD ⏬',
-  'tools': '🛠️ TOOLS ⚙️',
-  'fun': '🎉 FUN 🎲',
-  'nsfw': '🔞 NSFW 🛑',
-  'cmd': '🖥️ DATABASE 💾',
-  'owner': '👨‍💻 OWNER 🧑‍💻',
-  'audio': '🎤 AUDIOS 🔊',
-  'advanced': '🔒 ADVANCED 🔑',
+  'anime': '🧧 ANIME 🎐',
+  'main': '❗ INFO ❕',
+  'search': '🔎 SEARCH 🔍',
+  'game': '🕹️ GAME 🎮',
+  'serbot': '⚙️ SUB BOTS 🤖',
+  'rpg': '🌐 RPG 🥇',
+  'rg': '🎑 REGISTRO 🎟️',
+  'sticker': '💟 STICKER 🏷️',
+  'img': '🖼️ IMAGE 🎇',
+  'group': '👥 GROUPS 📢',
+//  'logo': 'MAKER',
+  'nable': '🎛️ ON / OFF 🔌', 
+  'premium': '💎 PREMIUM 👑',
+  'downloader': '📥 DOWNLOAD 📤',
+  'tools': '🔧 TOOLS 🛠️',
+  'fun': '🎉 FUN 🎊',
+  'nsfw': '🔞 NSFW 📛', 
+  'cmd': '🧮 DATABASE 🖥️',
+  'owner': '👤 OWNER 👁️', 
+  'audio': '📣 AUDIOS 🔊', 
+  'advanced': '🗝️ ADVANCED 📍',
 }
 
 const defaultMenu = {
   before: `
-> 「 🌐 TECH BOT 🤖 」\n
+> 「 🌲 FELIZ NAVIDAD ⛄ 」\n
 
 ›   ╔──────¤◎¤──────╗
-› ╭━💻☆𝐂𝐑𝐎𝐖𝐁𝐎𝐓-𝐎𝐅𝐂☆🌌━╮
+› ╭━💚☆𝐂𝐑𝐎𝐖𝐁𝐎𝐓-𝐎𝐅𝐂☆🎅━╮
 ›   ╚──────¤◎¤──────╝
-╭━─━─━─≪📡≫─━─━─━╮
-┃💾 ➬ *Cliente:* %name
-┃💾 ➬ *Estrellas:* %limit
-┃💾 ➬ *Nivel:* %level [ %xp4levelup Xp Para Subir De Nivel]
-┃💾 ➬ *Xp:* %exp / %maxexp
-┃💾 ➬ *TotalXp:* %totalexp
- ╰━─━─━─≪📡≫─━─━─━╯
+╭━─━─━─≪𖣘≫─━─━─━╮
+┃❄️ ➬ *Cliente:* %name
+┃❄️ ➬ *Estrellas:* %limit
+┃❄️ ➬ *Nivel:* %level [ %xp4levelup Xp Para Subir De Nivel]
+┃❄️ ➬ *Xp:* %exp / %maxexp
+┃❄️ ➬ *TotalXp:* %totalexp
+ ╰━─━─━─≪𖣘≫─━─━─━╯
 ╔──────¤◎¤──────╗
-┋#    💻   *𝐈 N F O  ‹‹❑*
+┋#    ❄️   *𝐈 N F O  ‹‹❑*
 ╚──────¤◎¤──────╝
-╭━─━─━─≪📡≫─━─━─━╮
-┃💾 ➬ *Modo:* %mode
-┃💾 ➬ *Prefijo:* [ *%_p* ]
-┃💾 ➬ *Rutina:* %muptime 
-┃💾 ➬ *Database:*  %totalreg
-╰━─━─━─≪📡≫─━─━─━╯
+╭━─━─━─≪𖣘≫─━─━─━╮
+┃❄️ ➬ *Modo:* %mode
+┃❄️ ➬ *Prefijo:* [ *%_p* ]
+┃❄️ ➬ *Rutina:* %muptime 
+┃❄️ ➬ *Database:*  %totalreg
+╰━─━─━─≪𖣘≫─━─━─━╯
      
    ⏤͟͟͞͞★CrowBot-Aiꗄ➺
 ◆━━━━━━━▣✦▣━━━━━━━━◆ 
  %readmore
-\t\t\t💻_*𝐋𝐈𝐒𝐓𝐀 𝐃𝐄 𝐂𝐎𝐌𝐀𝐍𝐃𝐎𝐒*_ 🌐
+\t\t\t🦌_*𝐋𝐈𝐒𝐓𝐀 𝐃𝐄 𝐂𝐎𝐌𝐀𝐍𝐃𝐎𝐒*_ 🌲
 `.trimStart(),
   header: '╭═════⊹⊱≼「 *%category* 」≽⊰⊹════•',
-  body: '┃💾› ✧ . %cmd %islimit %isPremium\n',
-  footer: '╰═════⊹⊱💻⊰⊹═════╯',
+  body: '┃⛄› ✧ . %cmd %islimit %isPremium\n',
+  footer: '╰═════⊹⊱🎁⊰⊹═════╯',
   after: `© ${textbot}`,
 }
 
