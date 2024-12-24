@@ -1,3 +1,6 @@
+ 
+
+```javascript
 import { watchFile, unwatchFile } from 'fs';
 import chalk from 'chalk';
 import { fileURLToPath } from 'url';
@@ -15,7 +18,7 @@ global.owner = [
   ['50498409019', 'CrowBot-AI', true],
   ['584241836217', 'Prak Harper', true],
   ['50488198573', 'DEYLIN-Support', true]
-
+]; // <-- Corchete de cierre y coma añadidos
 
 //*═══════════✧════════════✧═══════════*
 
@@ -43,7 +46,7 @@ global.miniurl = fs.readFileSync('./storage/img/miniurl.jpg');
 
 TODAVÍA NO TENGO GRUPO 
 
-global.canal = '📡 https://whatsapp.com/channel/0029VawF8fBBvvsktcInIz3m
+global.canal = '📡 https://whatsapp.com/channel/0029VawF8fBBvvsktcInIz3m';
 
 //*═══════════✧════════════✧═══════════*
 
@@ -86,3 +89,5 @@ watchFile(file, () => {
   console.log(chalk.greenBright("♻️ Archivo 'config.js' actualizado automáticamente"));
   import(`${file}?update=${Date.now()}`);
 });
+```
+
