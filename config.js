@@ -14,7 +14,7 @@ global.owner = [
   ['50557865603', 'WillZek', true],
   ['50498409019', 'CrowBot-AI', true],
   ['584241836217', 'Prak Harper', true],
-  [50488198573', 'DEYLIN-Support', true]
+  ['50488198573', 'DEYLIN-Support', true]
 ];
 
 //*═══════════✧════════════✧═══════════*
