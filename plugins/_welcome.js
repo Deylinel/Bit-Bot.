@@ -3,61 +3,42 @@ import fetch from 'node-fetch';
 
 export async function before(m, { conn, participants, groupMetadata }) {
   if (!m.messageStubType || !m.isGroup) return !0;
-  let pp = await conn.profilePictureUrl(m.messageStubParameters[0], 'image').catch(_ => 'https://i.ibb.co/dJFGxYG/file.jpg');
-  let img = await (await fetch(`${pp}`)).buffer();
+  let img = imagen1; // Aquí debes reemplazar `imagen1` con la URL de la imagen o variable adecuada
   let chat = global.db.data.chats[m.chat];
 
-  // **Bienvenida de Usuario** - Estilo Tecnológico
-  if (chat.bienvenida && m.messageStubType == 27) {
+  // **Bienvenida de Usuario**
+  if (chat.welcome && m.messageStubType == WAMessageStubType.NEW_PARTICIPANT) {
     let user = `@${m.messageStubParameters[0].split`@`[0]}`;
-    let welcome = chat.sWelcome 
-      ? chat.sWelcome.replace('@user', () => user) 
-      : `
-╭─━━━⬣【  *🤖 BIENVENIDO AL NÚCLEO 🤖*  】⬣━━━
-┃
-┃ ⚙️ *Usuario:* ${user}
-┃ 🖥️ *Grupo:* ${groupMetadata.subject}
-┃ 🌐 *Estado:* *SINCRONIZADO CON ÉXITO*
-┃ 
-┃ 🟢 *NOTA: Conéctate y explora la interfaz.*
-╰━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⬣`;
+    let welcome = `🚀≺ TECNO-BOT 
+「 Bienvenida 」 
+「 ${user} 」
+「 Grupo: ${groupMetadata.subject} 」
+\n  ιαɳαʅҽʝαɳԃɾσσƙ15x`;
 
-    await conn.sendAi(m.chat, botname, textbot, welcome, img, img, canal);
+    await conn.sendLuffy(m.chat, packname, textbot, welcome, img, img, redes, fkontak);
   }
 
-  // **Despedida de Usuario** - Estilo Tecnológico
-  if (chat.bienvenida && m.messageStubType == 28) {
+  // **Despedida de Usuario**
+  if (chat.welcome && m.messageStubType == WAMessageStubType.REMOVED) {
     let user = `@${m.messageStubParameters[0].split`@`[0]}`;
-    let bye = chat.sBye 
-      ? chat.sBye.replace('@user', () => user) 
-      : `
-╭─━━━⬣【  *⚠️ SESIÓN FINALIZADA ⚠️*  】⬣━━━
-┃
-┃ 🔻 *Usuario Desconectado:* ${user}
-┃ 🖥️ *Grupo:* ${groupMetadata.subject}
-┃ ❌ *Estado:* *DESCONECTADO DEL SISTEMA*
-┃ 
-┃ 🚪 *Hasta la próxima conexión.*
-╰━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⬣`;
+    let bye = `🚀≺ TECNO-BOT 
+「 Adiós 」 
+「 ${user} 」
+「 Hasta pronto 」
+\n  ιαɳαʅҽʝαɳԃɾσσƙ15x`;
 
-    await conn.sendAi(m.chat, botname, textbot, bye, img, img, canal);
+    await conn.sendLuffy(m.chat, packname, textbot, bye, img, img, redes, fkontak);
   }
 
-  // **Expulsión de Usuario** - Estilo Tecnológico
-  if (chat.bienvenida && m.messageStubType == 32) {
+  // **Expulsión de Usuario**
+  if (chat.welcome && m.messageStubType == WAMessageStubType.KICK) {
     let user = `@${m.messageStubParameters[0].split`@`[0]}`;
-    let kick = chat.sBye 
-      ? chat.sBye.replace('@user', () => user) 
-      : `
-╭─━━━⬣【  *🛑 ACCESO DENEGADO 🛑*  】⬣━━━
-┃
-┃ 🔴 *Usuario Expulsado:* ${user}
-┃ 🖥️ *Grupo:* ${groupMetadata.subject}
-┃ ⚠️ *Estado:* *ELIMINADO DE LA BASE DE DATOS*
-┃ 
-┃ 🚫 *No se permiten reconexiones sin autorización.*
-╰━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⬣`;
+    let kick = `🚀≺ TECNO-BOT 
+「 Expulsado 」 
+「 ${user} 」
+「 No se permite reconexión sin autorización 」
+\n  ιαɳαʅҽʝαɳԃɾσσƙ15x`;
 
-    await conn.sendAi(m.chat, botname, textbot, kick, img, img, canal);
+    await conn.sendLuffy(m.chat, packname, textbot, kick, img, img, redes, fkontak);
   }
 }
